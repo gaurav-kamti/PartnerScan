@@ -39,6 +39,30 @@ async function loadResults() {
       const results = session.results || {};
       const detailedAnswers = results.detailedAnswers || [];
       
+      // Calculate verdict color based on flags
+      const brightGreen = results.brightGreen || 0;
+      const green = results.green || 0;
+      const lightGreen = results.lightGreen || 0;
+      const orange = results.orange || 0;
+      const red = results.red || 0;
+      const bigRed = results.bigRed || 0;
+      
+      const totalRed = bigRed + red + orange;
+      const totalGreen = brightGreen + green + lightGreen;
+      
+      let verdictColor;
+      if (totalRed >= totalGreen * 2.5) {
+        verdictColor = 'darkred';
+      } else if (totalRed >= totalGreen * 1.5) {
+        verdictColor = 'red';
+      } else if (totalGreen >= totalRed * 2) {
+        verdictColor = '#006400';
+      } else if (totalGreen > totalRed) {
+        verdictColor = 'green';
+      } else {
+        verdictColor = '#d35400';
+      }
+      
       return `
         <div class="result-card">
           <div class="result-header">
@@ -79,7 +103,7 @@ async function loadResults() {
             </div>
           </div>
           
-          <div class="verdict">
+          <div class="verdict" style="background: ${verdictColor};">
             ${results.verdict || 'No verdict available'}
           </div>
           

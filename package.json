@@ -1,0 +1,25 @@
+{
+    "name": "rishta-radar",
+    "version": "1.0.0",
+    "description": "Collaborative quiz app",
+    "main": "server.js",
+    "scripts": {
+        "start": "node server.js",
+        "dev": "nodemon server.js",
+        "check": "node check-setup.js"
+    },
+    "dependencies": {
+        "express": "^4.18.2",
+        "express-session": "^1.17.3",
+        "connect-mongo": "^5.1.0",
+        "bcryptjs": "^2.4.3",
+        "uuid": "^9.0.0",
+        "body-parser": "^1.20.2",
+        "nodemailer": "^6.9.7",
+        "mongoose": "^8.0.3",
+        "dotenv": "^16.3.1"
+    },
+    "devDependencies": {
+        "nodemon": "^3.0.2"
+    }
+}

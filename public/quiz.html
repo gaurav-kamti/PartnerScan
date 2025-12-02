@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quiz - Rishta Radar ⚡</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="stylesheet" href="style.css" />
+  <script src="toast.js"></script>
+</head>
+<body>
+  <!-- Floating Hearts Background -->
+  <div class="hearts-background">
+    <div class="heart">💕</div>
+    <div class="heart">💖</div>
+    <div class="heart">💗</div>
+    <div class="heart">💓</div>
+    <div class="heart">💝</div>
+    <div class="heart">💕</div>
+    <div class="heart">💖</div>
+    <div class="heart">💗</div>
+  </div>
+
+  <!-- Main Quiz Container -->
+  <div id="quiz-container">
+    <div class="quiz-header">
+      <h1>✨ Rishta Radar Quiz ✨</h1>
+      <p class="subtitle">Let's find out! 💕</p>
+    </div>
+    <div class="container">
+      <div class="progress-bar">
+        <div class="progress-fill" id="progress-fill"></div>
+      </div>
+      <div id="question-area">
+        <div class="question-number" id="question-number">Question 1 of 4</div>
+        <p id="question-text">Question will appear here...</p>
+      </div>
+      <!-- Options Buttons Container -->
+      <div id="choices-container">
+        <!-- Options buttons will be injected here by JavaScript -->
+      </div>
+      <!-- Control Area -->
+      <div class="button-container">
+        <button id="next-button">Next Question 💖</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Results Screen -->
+  <div id="results-screen" style="display: none">
+    <div class="results-container">
+      <h2 class="results-title">✨ Your Answers ✨</h2>
+      <div class="hearts-divider">💕 💖 💗 💓 💝</div>
+      <ul id="final-results" class="results-list"></ul>
+      <button id="restart-button" class="cute-button">Submit Results 💕</button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

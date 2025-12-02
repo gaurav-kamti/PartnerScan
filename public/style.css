@@ -402,53 +402,139 @@ h1 {
   }
 }
 
-@media (max-width: 600px) {
+/* Tablet Responsive */
+@media (max-width: 768px) {
   body {
     padding: 15px;
   }
 
   .container {
-    padding: 25px 20px;
+    padding: 30px 25px;
+    max-width: 100%;
   }
 
   h1 {
-    font-size: 1.6rem;
+    font-size: 1.8rem;
   }
 
   .subtitle {
-    font-size: 0.9rem;
+    font-size: 1rem;
   }
 
   .quiz-header::before,
   .quiz-header::after {
-    font-size: 1.5rem;
+    font-size: 1.8rem;
   }
 
   #question-text {
-    font-size: 1.2rem;
+    font-size: 1.3rem;
+    padding: 0 10px;
+  }
+
+  .question-number {
+    font-size: 0.9rem;
   }
 
   .option-item {
-    font-size: 1rem;
-    padding: 15px 18px;
+    font-size: 1.05rem;
+    padding: 16px 20px;
   }
 
   #next-button,
   .cute-button {
-    padding: 14px 35px;
-    font-size: 1.05rem;
+    padding: 15px 40px;
+    font-size: 1.1rem;
   }
 
   .results-container {
-    padding: 30px 25px;
+    padding: 35px 30px;
   }
 
   .results-title {
-    font-size: 1.6rem;
+    font-size: 1.8rem;
+  }
+
+  .results-list li {
+    font-size: 1rem;
+    padding: 12px;
   }
 
   .heart {
-    font-size: 1.5rem;
+    font-size: 1.6rem;
+  }
+}
+
+/* Mobile Responsive */
+@media (max-width: 480px) {
+  body {
+    padding: 10px;
+  }
+
+  .container {
+    padding: 20px 15px;
+  }
+
+  h1 {
+    font-size: 1.4rem;
+  }
+
+  .subtitle {
+    font-size: 0.85rem;
+  }
+
+  .quiz-header::before,
+  .quiz-header::after {
+    font-size: 1.3rem;
+  }
+
+  #question-text {
+    font-size: 1.1rem;
+    padding: 0 5px;
+    line-height: 1.4;
+  }
+
+  .question-number {
+    font-size: 0.8rem;
+    margin-bottom: 10px;
+  }
+
+  .option-item {
+    font-size: 0.95rem;
+    padding: 14px 16px;
+    margin-bottom: 10px;
+  }
+
+  #next-button,
+  .cute-button {
+    padding: 12px 30px;
+    font-size: 1rem;
+  }
+
+  .results-container {
+    padding: 25px 20px;
+  }
+
+  .results-title {
+    font-size: 1.4rem;
+  }
+
+  .hearts-divider {
+    font-size: 1.2rem;
+    margin: 15px 0;
+  }
+
+  .results-list li {
+    font-size: 0.9rem;
+    padding: 10px;
+    margin-bottom: 10px;
+  }
+
+  .heart {
+    font-size: 1.3rem;
+  }
+
+  .progress-bar {
+    height: 6px;
   }
 }
 

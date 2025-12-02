@@ -304,3 +304,67 @@ body::before {
 }
 
 /* Removed sessions section - now using inbox page */
+
+/* Mobile Responsive for Card Content */
+@media (max-width: 768px) {
+  .card {
+    padding: 30px 20px;
+  }
+
+  #title {
+    font-size: 1.8rem;
+    padding: 10px 15px;
+  }
+
+  .tagline {
+    font-size: 1rem;
+    padding: 10px 15px;
+  }
+
+  .discription {
+    font-size: 0.9rem;
+    padding: 10px 15px;
+    gap: 8px;
+  }
+
+  .emoji {
+    font-size: 1.4rem;
+  }
+
+  .start-btn {
+    padding: 14px 35px;
+    font-size: 1.1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .card {
+    padding: 25px 15px;
+  }
+
+  #title {
+    font-size: 1.5rem;
+    padding: 8px 12px;
+  }
+
+  .tagline {
+    font-size: 0.9rem;
+    padding: 8px 12px;
+    line-height: 1.5;
+  }
+
+  .discription {
+    font-size: 0.85rem;
+    padding: 8px 12px;
+    gap: 6px;
+  }
+
+  .emoji {
+    font-size: 1.2rem;
+  }
+
+  .start-btn {
+    padding: 12px 30px;
+    font-size: 1rem;
+  }
+}

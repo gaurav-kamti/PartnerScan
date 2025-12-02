@@ -791,21 +791,21 @@ function showThankYouMessage() {
     transform: translate(-50%, -50%) scale(0);
     background: linear-gradient(135deg, #ff9ec8, #ffb8d8);
     color: white;
-    padding: ${isMobile ? '30px 40px' : '40px 60px'};
+    padding: ${isMobile ? '35px 45px' : '50px 80px'};
     border-radius: 30px;
     box-shadow: 0 20px 60px rgba(255, 105, 180, 0.5);
     z-index: 10000;
     text-align: center;
-    font-size: ${isMobile ? '1.3rem' : '1.8rem'};
+    font-size: ${isMobile ? '1.5rem' : '2rem'};
     font-weight: bold;
     animation: popIn 0.5s ease forwards;
     border: 4px solid white;
-    max-width: ${isMobile ? '85%' : 'auto'};
+    max-width: ${isMobile ? '90%' : 'auto'};
   `;
   overlay.innerHTML = `
-    <div style="font-size: ${isMobile ? '2rem' : '3rem'}; margin-bottom: 15px;">💕</div>
+    <div style="font-size: ${isMobile ? '2.5rem' : '3.5rem'}; margin-bottom: 15px;">💕</div>
     <div>Thank You!</div>
-    <div style="font-size: ${isMobile ? '0.85rem' : '1.2rem'}; margin-top: 10px; font-weight: normal;">for your time and all the effort you put in.💖</div>
+    <div style="font-size: ${isMobile ? '1rem' : '1.4rem'}; margin-top: 10px; font-weight: normal;">for your time and all the effort you put in.💖</div>
   `;
   
   document.body.appendChild(overlay);

@@ -5,9 +5,7 @@ const MongoStore = require('connect-mongo');
 const bodyParser = require('body-parser');
 const bcrypt = require('bcryptjs');
 const { v4: uuidv4 } = require('uuid');
-const nodemailer = require('nodemailer');
 const mongoose = require('mongoose');
-const path = require('path');
 
 // Import models
 const User = require('./models/User');
@@ -36,15 +34,6 @@ app.use(session({
   }),
   cookie: { maxAge: 24 * 60 * 60 * 1000 }
 }));
-
-// Email configuration (configure with your SMTP details)
-const transporter = nodemailer.createTransport({
-  service: process.env.EMAIL_SERVICE || 'gmail',
-  auth: {
-    user: process.env.EMAIL_USER || 'your-email@gmail.com',
-    pass: process.env.EMAIL_PASSWORD || 'your-app-password'
-  }
-});
 
 // Auth middleware
 const requireAuth = (req, res, next) => {
@@ -187,38 +176,6 @@ app.post('/api/submit-results', async (req, res) => {
     session.completedAt = new Date();
     
     await session.save();
-    
-    // Send email notification
-    try {
-      // Build detailed answers HTML
-      let answersHtml = '';
-      if (results.detailedAnswers && results.detailedAnswers.length > 0) {
-        answersHtml = '<h3>Detailed Answers:</h3><ul>';
-        results.detailedAnswers.forEach(answer => {
-          answersHtml += `<li><strong>${answer.question}:</strong> ${answer.answer} <em>(${answer.flag})</em></li>`;
-        });
-        answersHtml += '</ul>';
-      }
-      
-      await transporter.sendMail({
-        from: process.env.EMAIL_USER || 'your-email@gmail.com',
-        to: session.creatorEmail,
-        subject: `${userName} completed your Rishta Radar quiz!`,
-        html: `
-          <h2>Quiz Results from ${userName}</h2>
-          <p><strong>Bright Green:</strong> ${results.brightGreen}</p>
-          <p><strong>Green:</strong> ${results.green}</p>
-          <p><strong>Light Green:</strong> ${results.lightGreen}</p>
-          <p><strong>Orange:</strong> ${results.orange}</p>
-          <p><strong>Red:</strong> ${results.red}</p>
-          <p><strong>Big Red:</strong> ${results.bigRed}</p>
-          <p><strong>Verdict:</strong> ${results.verdict}</p>
-          ${answersHtml}
-        `
-      });
-    } catch (error) {
-      // Email sending failed silently
-    }
     
     res.json({ success: true });
   } catch (error) {

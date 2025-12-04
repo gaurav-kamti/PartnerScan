@@ -324,8 +324,30 @@ function shuffleArray(array) {
   return shuffled;
 }
 
-// Randomize questions at the start
-const shuffledQuizData = shuffleArray(quizData);
+// Store selected relationship stage
+let selectedStage = null;
+let shuffledQuizData = [];
+
+// Get quiz data based on relationship stage
+function getQuizDataForStage(stage) {
+  let questions;
+  switch(stage) {
+    case 'situationship':
+      questions = situationshipQuestions;
+      break;
+    case 'relationship':
+      questions = relationshipQuestions;
+      break;
+    case 'fiance':
+      questions = fianceQuestions;
+      break;
+    default:
+      questions = situationshipQuestions;
+  }
+  
+  // Add original index to each question before shuffling
+  return questions.map((q, index) => ({...q, originalIndex: index}));
+}
 
 const userFavorites = [];
 let currentQuestionIndex = 0;
@@ -423,10 +445,11 @@ nextButton.addEventListener("click", () => {
 
   const currentCategory = shuffledQuizData[currentQuestionIndex].category;
   
-  // Update or add answer
+  // Update or add answer with original index for proper ordering
   userFavorites[currentQuestionIndex] = {
     category: currentCategory,
     choice: currentSelection,
+    originalIndex: shuffledQuizData[currentQuestionIndex].originalIndex
   };
 
   currentQuestionIndex++;
@@ -463,11 +486,12 @@ function showResults() {
     else if (color === "Red") red++;
     else if (color === "Big Red") bigRed++;
 
-    // Add to detailed answers
+    // Add to detailed answers with original index
     detailedAnswers.push({
       question: item.category,
       answer: item.choice,
-      flag: color
+      flag: color,
+      originalIndex: item.originalIndex !== undefined ? item.originalIndex : 999
     });
 
     const li = document.createElement("li");
@@ -519,6 +543,10 @@ async function checkSession() {
       showAlreadyCompletedMessage();
       return;
     }
+    
+    // Load questions based on session stage
+    const stageQuestions = getQuizDataForStage(session.stage);
+    shuffledQuizData = shuffleArray(stageQuestions);
     
     // Ask for user's name with cute modal
     showNameInputModal(session.creatorName);
@@ -955,3 +983,5 @@ document.head.appendChild(animationStyles);
 
 // Initialize the survey on page load
 window.onload = checkSession;
+
+

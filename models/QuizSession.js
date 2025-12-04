@@ -19,6 +19,11 @@ const quizSessionSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  stage: {
+    type: String,
+    enum: ['situationship', 'relationship', 'fiance'],
+    default: 'situationship'
+  },
   completed: {
     type: Boolean,
     default: false
@@ -37,7 +42,8 @@ const quizSessionSchema = new mongoose.Schema({
     detailedAnswers: [{
       question: String,
       answer: String,
-      flag: String
+      flag: String,
+      originalIndex: Number
     }]
   },
   createdAt: {

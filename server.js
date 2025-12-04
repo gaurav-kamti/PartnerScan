@@ -153,13 +153,15 @@ app.post('/api/create-session', requireAuth, async (req, res) => {
       return res.status(404).json({ error: 'User not found' });
     }
     
+    const { stage } = req.body;
     const sessionId = uuidv4();
     
     const quizSession = new QuizSession({
       sessionId,
       creatorId: user._id,
       creatorEmail: user.email,
-      creatorName: user.name
+      creatorName: user.name,
+      stage: stage || 'situationship'
     });
     
     await quizSession.save();
@@ -183,7 +185,8 @@ app.get('/api/session/:sessionId', async (req, res) => {
     res.json({
       id: session.sessionId,
       completed: session.completed,
-      creatorName: session.creatorName
+      creatorName: session.creatorName,
+      stage: session.stage || 'situationship'
     });
   } catch (error) {
     res.status(500).json({ error: 'Server error' });

@@ -37,7 +37,14 @@ async function loadResults() {
     
     container.innerHTML = completedSessions.map((session, index) => {
       const results = session.results || {};
-      const detailedAnswers = results.detailedAnswers || [];
+      let detailedAnswers = results.detailedAnswers || [];
+      
+      // Sort answers by original question order
+      detailedAnswers = [...detailedAnswers].sort((a, b) => {
+        const indexA = a.originalIndex !== undefined ? a.originalIndex : 999;
+        const indexB = b.originalIndex !== undefined ? b.originalIndex : 999;
+        return indexA - indexB;
+      });
       
       // Calculate verdict color based on weighted points
       const brightGreen = results.brightGreen || 0;

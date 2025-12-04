@@ -28,10 +28,45 @@
     <div class="card">
       <h2 id="title">Red & Green Flag</h2>
       <p class="tagline">Ek chhota sa quiz jo bata dega<br />aage kya scene hone wala hai 😏</p>
-      <div class="discription">
-        <span class="emoji">⏱</span> 19 sawal • 5-7 minute
+      
+      <!-- Relationship Stage Selector -->
+      <div class="stage-selector" style="margin: 15px 0;">
+        <p style="font-weight: 600; margin-bottom: 10px; color: white; font-size: 0.9rem;">Select Relationship Stage:</p>
+        <div class="stage-options-compact">
+          <label class="stage-option-compact">
+            <input type="radio" name="relationship-stage" value="situationship" checked>
+            <span class="stage-label">
+              <span class="stage-text">💭 Situationship</span>
+              <span class="info-icon" data-stage="situationship">
+                <img src="/info-icon.svg" alt="info" />
+              </span>
+            </span>
+          </label>
+          <label class="stage-option-compact">
+            <input type="radio" name="relationship-stage" value="relationship">
+            <span class="stage-label">
+              <span class="stage-text">💑 Relationship</span>
+              <span class="info-icon" data-stage="relationship">
+                <img src="/info-icon.svg" alt="info" />
+              </span>
+            </span>
+          </label>
+          <label class="stage-option-compact">
+            <input type="radio" name="relationship-stage" value="fiance">
+            <span class="stage-label">
+              <span class="stage-text">💍 Fiancé</span>
+              <span class="info-icon" data-stage="fiance">
+                <img src="/info-icon.svg" alt="info" />
+              </span>
+            </span>
+          </label>
+        </div>
       </div>
-      <button class="start-btn" id="startBtn">Start ➡️</button>
+      
+      <div class="discription">
+        <span class="emoji">⏱</span> <span id="questionCount">7 questions</span> • 3-7 minutes
+      </div>
+      <button class="start-btn" id="startBtn">Create Quiz Link ➡️</button>
       <div id="shareLink" style="display:none; margin-top: 20px;">
         <p style="font-weight: 600; margin-bottom: 10px;">Share this link:</p>
         <input type="text" id="linkInput" readonly style="width: 100%; padding: 10px; border-radius: 8px; border: 2px solid #667eea; margin-bottom: 10px;">
@@ -42,6 +77,21 @@
   <footer style="text-align: center; padding: 2rem; color: white; margin-top: 4rem; opacity: 0.8;">
     <p>&copy; 2025 PartnerScan. <a href="/privacy" style="color: white;">Privacy</a> • <a href="/terms" style="color: white;">Terms</a></p>
   </footer>
+  
+  <!-- Tooltip backdrop (full screen overlay) -->
+  <div id="tooltip-backdrop" class="tooltip-backdrop" style="display: none;">
+    <!-- Tooltip for full questions -->
+    <div id="question-tooltip" class="question-tooltip">
+      <div class="tooltip-header">
+        <strong>Questions List:</strong>
+        <span class="close-tooltip">✕</span>
+      </div>
+      <div class="tooltip-note">
+        <small>📝 Note: Questions will appear in random order during the quiz. Answers in inbox will match this list order.</small>
+      </div>
+      <div id="tooltip-content" class="tooltip-scroll"></div>
+    </div>
+  </div>
   
   <script src="home.js"></script>
 </body>

@@ -22,7 +22,7 @@ if (signupForm) {
       
       if (response.ok) {
         showToast('Account created successfully! 🎉', 'success');
-        setTimeout(() => window.location.href = '/index.html', 1000);
+        setTimeout(() => window.location.href = '/dashboard.html', 1000);
       } else {
         showToast(data.error || 'Signup failed', 'error');
         document.getElementById('error').textContent = data.error;
@@ -58,7 +58,7 @@ if (loginForm) {
       
       if (response.ok) {
         showToast('Login successful! Welcome back 👋', 'success');
-        setTimeout(() => window.location.href = '/index.html', 1000);
+        setTimeout(() => window.location.href = '/dashboard.html', 1000);
       } else {
         showToast(data.error || 'Login failed', 'error');
         document.getElementById('error').textContent = data.error;

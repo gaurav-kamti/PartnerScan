@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard - PartnerScan ⚡</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="dashboard.css" />
+  <script src="toast.js"></script>
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="header-container">
+      <a href="/landing.html" class="logo" style="text-decoration: none; color: inherit; display: flex; align-items: center; gap: 10px;">
+        <img src="/favicon.svg" alt="PartnerScan" style="width: 32px; height: 32px;">
+        PartnerScan
+      </a>
+      <div class="header-right">
+        <span id="userName" class="welcome-msg"></span>
+        <a href="/inbox.html" class="inbox-btn">📬 Inbox</a>
+        <button id="logoutBtn" class="logout-btn">Logout</button>
+      </div>
+    </div>
+  </header>
+  <div class="container">
+    <div class="card">
+      <h2 id="title">Red & Green Flag</h2>
+      <p class="tagline">Ek chhota sa quiz jo bata dega<br />aage kya scene hone wala hai 😏</p>
+      <div class="discription">
+        <span class="emoji">⏱</span> 19 sawal • 5-7 minute
+      </div>
+      <button class="start-btn" id="startBtn">Start ➡️</button>
+      <div id="shareLink" style="display:none; margin-top: 20px;">
+        <p style="font-weight: 600; margin-bottom: 10px;">Share this link:</p>
+        <input type="text" id="linkInput" readonly style="width: 100%; padding: 10px; border-radius: 8px; border: 2px solid #667eea; margin-bottom: 10px;">
+        <button id="copyBtn" style="width: 100%; padding: 10px; background: linear-gradient(135deg, #667eea, #764ba2); color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: 600;">Copy Link</button>
+      </div>
+    </div>
+  </div>
+  <footer style="text-align: center; padding: 2rem; color: white; margin-top: 4rem; opacity: 0.8;">
+    <p>&copy; 2025 PartnerScan. <a href="/privacy.html" style="color: white;">Privacy</a> • <a href="/terms.html" style="color: white;">Terms</a></p>
+  </footer>
+  
+  <script src="home.js"></script>
+</body>
+</html>

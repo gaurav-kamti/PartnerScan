@@ -37,7 +37,15 @@ window.onload = async () => {
       'Currently koi male best friend hai ya close male friend?',
       'Kahin koi ladka zyada line maar raha ho toh tu kaise handle karti?',
       'Couple ke beech privacy honi chahiye ya nahi?',
-      'Shopping karti ho toh budget banake jaati ho ya dil khol ke shopping?'
+      'Shopping karti ho toh budget banake jaati ho ya dil khol ke shopping?',
+      'Agar koi humse puche ki hum dono kya hain, toh tum kya jawab dogi?',
+      'Tumhara kya khayal hai, ek \'Acha Time\' kitne din tak \'Acha Relationship\' ban sakta hai?',
+      'Agar hum ek doosre se ek hafta baat na karein, toh tum kitni worried hogi?',
+      'Tumhara kya vichaar hai ki kya hum dono ko aur logo ko bhi date karna chahiye?',
+      'Agar tumhare friends puche ki \'Tumhare aur uske beech kya chal raha hai?\', toh tumhara standard answer kya hoga?',
+      'Agar hum dono ke beech \'Feelings\' bahut zyada ho jaayein, toh tumhara agla kadam kya hoga?',
+      'Tumhara kya vichaar hai ki hum ek doosre ke \'Family\' ko milne ya unki life mein kitna involve ho sakte hain?',
+      'Tumhare liye yeh \'situation\' zyada kya hai - \'Time pass\' ya \'Emotional connection\' ki taraf ek step?'
     ],
     'relationship': [
       'BJP ya Congress?',
@@ -48,12 +56,13 @@ window.onload = async () => {
       'Tumhare mummy-papa ke jhagde mein maximum time kon sahi hote the?',
       'Bachpan mein teacher ne class mein daanta toh tum roti thi ya jawab deti thi?',
       'Tumhare ghar ka sabse bada jhagda kis baat pe hua tha jo aaj bhi yaad hai?',
-      'Tumhare papa ne kabhi mummy ke saamne sorry bola hai ya mummy hi maafi maang leti thi?',
       'Shopping karti ho toh budget banake jaati ho ya dil khol ke shopping?',
       'Agar tumhare best-friends, relatives, parents tumse 3 lac udhaar maange aur bole 5 saal mein lautayega, dogi?',
       'Couple ke beech privacy honi chahiye ya nahi?',
       'Apne future husband mein sabse pehle kya change karogi?',
-      'Shaadi ke baad city mein saath rehne ke liye force karogi ya adjust kar logi agar mera job dusre city mein ho?'
+      'Ek dost jo apni job chhodkar naya business shuru karna chahta hai, use tum kya salah (advice) dogi?',
+      'Agar tumhare kisi purane dost se tumhara jhagda ho jaaye aur woh bahut dino baad maafi maange, toh tumhari pehli reaction kya hogi?',
+      'Tumhara kya मानना hai ki ek relationship mein, apne partner ke kitne dosto ko importance deni chahiye?'
     ],
     'fiance': [
       'BJP ya Congress?',
@@ -64,17 +73,18 @@ window.onload = async () => {
       'Tumhare mummy-papa ke jhagde mein maximum time kon sahi hote the?',
       'Bachpan mein teacher ne class mein daanta toh tum roti thi ya jawab deti thi?',
       'Tumhare ghar ka sabse bada jhagda kis baat pe hua tha jo aaj bhi yaad hai?',
-      'Tumhare papa ne kabhi mummy ke saamne sorry bola hai ya mummy hi maafi maang leti thi?',
       'Shopping karti ho toh budget banake jaati ho ya dil khol ke shopping?',
       'Agar tumhare best-friends, relatives, parents tumse 3 lac udhaar maange aur bole 5 saal mein lautayega, dogi?',
       'Apne future husband mein sabse pehle kya change karogi?',
-      'Shaadi ke baad city mein saath rehne ke liye force karogi ya adjust kar logi agar mera job dusre city mein ho?',
       'Shaadi ke kitne saal baad baby planning?',
       'Couple ke beech privacy honi chahiye ya nahi?',
       'Shaadi ke baad paise kaise divide honge?',
       'Husband ki salary ka kitna percent wife ke personal account mein automatically aana chahiye?',
       'Shaadi ke baad phone ka password mujhe dena padega ya privacy bolke taal dogi?',
-      'Agar pata chale husband salary chhupa raha hai, first reaction?'
+      'Agar pata chale husband salary chhupa raha hai, first reaction?',
+      'Ek dost jo apni job chhodkar naya business shuru karna chahta hai, use tum kya salah (advice) dogi?',
+      'Agar tumhare kisi purane dost se tumhara jhagda ho jaaye aur woh bahut dino baad maafi maange, toh tumhari pehli reaction kya hogi?',
+      'Tumhara kya मानना hai ki ek relationship mein, apne partner ke kitne dosto ko importance deni chahiye?'
     ]
   };
 
@@ -82,9 +92,9 @@ window.onload = async () => {
   const stageRadios = document.querySelectorAll('input[name="relationship-stage"]');
   const questionCount = document.getElementById('questionCount');
   const stageCounts = {
-    'situationship': '7 questions',
-    'relationship': '14 questions',
-    'fiance': '18 questions'
+    'situationship': '15 questions',
+    'relationship': '15 questions',
+    'fiance': '21 questions'
   };
   
   stageRadios.forEach(radio => {

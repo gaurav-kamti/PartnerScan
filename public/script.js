@@ -198,17 +198,59 @@ const quizData = [
 ];
 
 const choiceToValueMap = {
+  "Defining the Status/Clarity": {
+    "Casual Date hi bolungi": "Green",
+    "Friend hi bolungi": "Big Red",
+    "Relationship, if you introduce me": "Light Green",
+    "Pata nahi, jaisa tum bolo": "Green",
+  },
+  "Future Projection/Intentions": {
+    "Jab tak baatein ho rahi hai, tab tak theek hai.": "Red",
+    "Jab tak hum dono openly isey exclusive na kar dein.": "Bright Green",
+    "Main toh future ka sochti hi nahi, sirf present.": "Big Red",
+    "Agar dono ki feelings serious ho jaayein toh.": "Green",
+  },
+  "Effort & Communication Need": {
+    "Thodi si worried, par assume karungi ki tum busy hoge.": "Red",
+    "Bahut gussa, aur fir main tumse contact karna band kar dungi.": "Big Red",
+    "Mujhe koi fark nahi padega, it's a situationship.": "Big Red",
+    "Tumhe call karungi, confirm karne ke liye ki sab theek hai.": "Bright Green",
+  },
+  "Dealing with Exclusivity": {
+    "Haan, jab tak baat clear na ho, flexibility honi chahiye.": "Red",
+    "Nahi, main kisi bhi 'situation' mein cheating nahi karti.": "Bright Green",
+    "Tumhari marzi, mujhe koi problem nahi.": "Orange",
+    "Mujhe is par baat nahi karni.": "Big Red",
+  },
+  "Need for External Validation": {
+    "Detail mein sab kuch bataungi.": "Orange",
+    "Bolungi ki 'Bahut accha hai, but we're taking it slow.'": "Bright Green",
+    "Unko ghumakar jawab dungi aur keh dungi ki 'Apna Kaam karo'.": "Red",
+    "Bolungi ki 'Mujhe koi commitment nahi chahiye.'": "Big Red",
+  },
+  "Commitment Fear/Avoidance": {
+    "Main turant relationship mein aane ke liye ready ho jaungi.": "Bright Green",
+    "Main pehle tumse is par baat karungi.": "Green",
+    "Main thoda peeche hatt jaungi, kyunki commitment se darr lagta hai.": "Red",
+    "Zyada feelings se mujhe anxiety hoti hai, so I'll stop seeing you.": "Big Red",
+  },
+  "Setting Boundaries/Priorities": {
+    "Sirf tab jab hum full-time relationship mein ho.": "Light Green",
+    "Family ko involve karne ki koi zaroorat nahi hai.": "Big Red",
+    "Jab tum chaho, main ready hoon.": "Green",
+    "Dheere-dheere, ek casual tareeke se.": "Green",
+  },
+  "Emotional Investment vs. Transaction": {
+    "Emotional connection Kind of.": "Bright Green",
+    "Abhi toh feelings nhi hai but agar ho gaya toh accha hai.": "Orange",
+    "Emotions involve nahi karne.": "Big Red",
+    "Jo bhi ho, itna kon sochta hai.": "Red",
+  },
   Politics: {
     BJP: "Bright Green",
     Congress: "Red",
     "Depends on candidate, not party": "Green",
     "Neither, I hate politics": "Light Green",
-  },
-  "Living Arrangement After Marriage": {
-    "Bilkul force karungi, separate nahi reh sakte": "Light Green",
-    "Long-distance bhi chalega 2-3 saal": "Bright Green",
-    "Main ghar pe reh lungi": "Orange",
-    "Mere ghar pe sath rehna hoga": "Big Red",
   },
   "Parents' Arguments": {
     "Papa mostly sahi": "Bright Green",
@@ -288,12 +330,7 @@ const choiceToValueMap = {
     "Uska friend circle": "Red",
     "Kuch nahi change karungi": "Green",
   },
-  "Parents Saying Sorry": {
-    "Papa kabhi sorry nahi bolte": "Bright Green",
-    "Papa sorry bolte the": "Red",
-    "Mummy hi mostly sorry bolti thi": "Green",
-    "Dono kabhi sorry nahi bolte the": "Orange",
-  },
+
   "Shopping Style": {
     "Strict budget": "Bright Green",
     "Approximate idea hota hai": "Green",
@@ -311,6 +348,24 @@ const choiceToValueMap = {
     "Bada jhagda + trust gaya forever": "Red",
     "Baat karke samjhaungi, mauka dungi": "Bright Green",
     "Chup reh jaungi": "Light Green",
+  },
+  "Emotional Validation & Support": {
+    "Use bolungi ki 'Dream big!' par pehle ek detailed plan banao aur backup rakho.": "Bright Green",
+    "Kahungi ki 'Job mat chhod, bahar bahut competition hai, safe raho.'": "Orange",
+    "Bolungi ki 'Jo karna hai karo, mujhe kya? Main toh apne decisions par focus karti hoon.'": "Red",
+    "Use apne purane experiences bataungi aur usko naya business shuru karne se rokungi.": "Big Red",
+  },
+  "Handling Past Conflicts and Forgiveness": {
+    "Use maaf kar dungi aur aage badhne ki koshish karungi.": "Bright Green",
+    "Maaf toh kar dungi, par uss galti ko baar-baar yaad dilaungi taaki woh dobara na kare.": "Big Red",
+    "Use seedhe block kar dungi aur kabhi baat nahi karungi.": "Red",
+    "Pehle usse poora sunungi, phir thoda time lekar sochungi aur agar woh badal gaya ho toh maaf karungi.": "Green",
+  },
+  "Social Independence and Partner's Focus": {
+    "Sirf un dosto ko jo hum dono ke common hain, baaki sab zaroori nahi.": "Red",
+    "Partner ke saare dosto ko importance deni chahiye aur unke saath time spend karna chahiye, woh uski life ka hissa hain.": "Green",
+    "Dosto ko chhodkar, sirf relationship aur hum dono par focus karna chahiye.": "Big Red",
+    "Main bas itna expect karungi ki woh apne personal aur dosto ke liye time manage kare, main interfere nahi karungi.": "Bright Green",
   },
 };
 

@@ -7,6 +7,21 @@ if (signupForm) {
     const name = document.getElementById('name').value;
     const email = document.getElementById('email').value;
     const password = document.getElementById('password').value;
+    const confirmPassword = document.getElementById('confirmPassword').value;
+    
+    // Validate password match
+    if (password !== confirmPassword) {
+      showToast('Passwords do not match', 'error');
+      document.getElementById('error').textContent = 'Passwords do not match';
+      return;
+    }
+    
+    // Validate password length
+    if (password.length < 6) {
+      showToast('Password must be at least 6 characters', 'error');
+      document.getElementById('error').textContent = 'Password must be at least 6 characters';
+      return;
+    }
     
     showLoading('Creating your account...');
     
@@ -70,3 +85,5 @@ if (loginForm) {
     }
   });
 }
+
+

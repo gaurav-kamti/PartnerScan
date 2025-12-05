@@ -51,20 +51,21 @@ Server will run at: `http://localhost:3000`
 ## 🎯 Testing the Flow
 
 1. **User1 (Creator)**:
-   - Visit `http://localhost:3000/signup.html`
-   - Create an account
+   - Visit `http://localhost:3000/landing`
+   - Click "Get Started" and create an account
+   - Select relationship stage (Situationship/Relationship/Fiancée)
    - Click "Start" button
-   - Copy the generated link
+   - Copy the generated link (shortened with ?s=)
 
 2. **User2 (Quiz Taker)**:
    - Open the shared link in another browser/incognito
    - Enter your name
-   - Complete the quiz
+   - Complete the stage-specific quiz
    - Submit results
 
 3. **User1 (View Results)**:
    - Check email for notification
-   - Or view results on dashboard (homepage)
+   - Or click "Inbox" on dashboard to see detailed results in original order
 
 ## 📧 Email Setup (Optional but Recommended)
 
@@ -94,19 +95,24 @@ Without email setup, results will still be saved to database and visible on dash
 ## 📁 Project Structure
 
 ```
-rishta-radar/
+partnerscan/
 ├── models/
 │   ├── User.js              # User schema
-│   └── QuizSession.js       # Quiz session schema
+│   └── QuizSession.js       # Quiz session schema with stage
 ├── public/
+│   ├── landing.html         # Landing page
 │   ├── login.html           # Login page
-│   ├── signup.html          # Signup page
-│   ├── index.html           # Homepage/Dashboard
-│   ├── quiz.html            # Quiz page
+│   ├── signup.html          # Signup with confirm password
+│   ├── dashboard.html       # Dashboard with stage selector
+│   ├── quiz.html            # Quiz page with randomization
+│   ├── inbox.html           # Results inbox
+│   ├── quiz-data.js         # Categorized questions
 │   ├── script.js            # Quiz logic
-│   ├── auth.js              # Auth logic
+│   ├── auth.js              # Auth logic with validation
+│   ├── home.js              # Dashboard logic
+│   ├── inbox.js             # Inbox logic
 │   └── *.css                # Styles
-├── server.js                # Express server
+├── server.js                # Express server with clean URLs
 ├── check-setup.js           # Setup checker
 ├── .env                     # Environment variables
 └── package.json             # Dependencies
@@ -115,8 +121,8 @@ rishta-radar/
 ## 🎨 Customization
 
 **Add More Questions:**
-- Edit `public/script.js`
-- Update `quizData` array
+- Edit `public/quiz-data.js`
+- Update stage-specific question arrays (situationship/relationship/fiancee)
 
 **Change Scoring:**
 - Edit `choiceToValueMap` in `public/script.js`

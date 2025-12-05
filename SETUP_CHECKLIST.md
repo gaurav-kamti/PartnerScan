@@ -72,11 +72,13 @@ For Gmail:
 ## 🧪 Test the Application
 
 ### Test User1 Flow:
-- [ ] Visit: http://localhost:3000/signup.html
-- [ ] Create account with name, email, password
-- [ ] Should redirect to homepage
+- [ ] Visit: http://localhost:3000/landing
+- [ ] Click "Get Started"
+- [ ] Create account with name, email, password, confirm password
+- [ ] Should redirect to dashboard
+- [ ] Select relationship stage (Situationship/Relationship/Fiancée)
 - [ ] Click "Start" button
-- [ ] Should see shareable link appear
+- [ ] Should see shareable link appear (shortened with ?s=)
 - [ ] Copy the link
 
 ### Test User2 Flow:
@@ -93,9 +95,10 @@ For Gmail:
 ### Test Results:
 - [ ] Check User1's email for notification (if email configured)
 - [ ] Go back to User1's browser
-- [ ] Refresh homepage
-- [ ] Should see completed session in "Your Quiz Sessions"
-- [ ] Should show User2's name and results
+- [ ] Click "Inbox" button on dashboard
+- [ ] Should see completed session with stage badge
+- [ ] Click "View Results" to see detailed answers in original order
+- [ ] Should show User2's name and all answers
 
 ## 🐛 Troubleshooting
 
@@ -142,10 +145,12 @@ Once everything works:
 
 | URL | Purpose |
 |-----|---------|
-| `/signup.html` | Create account |
-| `/login.html` | Login |
-| `/index.html` | Homepage/Dashboard |
-| `/quiz.html?sessionId=...` | Take quiz (shared link) |
+| `/landing` | Landing page |
+| `/signup` | Create account |
+| `/login` | Login |
+| `/dashboard` | Dashboard with stage selector |
+| `/inbox` | Results inbox |
+| `/quiz?s=...` | Take quiz (shortened shared link) |
 
 ## ✨ Success Criteria
 

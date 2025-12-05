@@ -34,11 +34,11 @@ You have two options for MongoDB:
    - Choose "Connect your application"
    - Copy the connection string (looks like: `mongodb+srv://username:<password>@cluster0.xxxxx.mongodb.net/`)
    - Replace `<password>` with your actual password
-   - Add database name at the end: `mongodb+srv://username:password@cluster0.xxxxx.mongodb.net/rishta-radar`
+   - Add database name at the end: `mongodb+srv://username:password@cluster0.xxxxx.mongodb.net/partnerscan`
 
 6. **Update .env file**:
    ```
-   MONGODB_URI=mongodb+srv://username:password@cluster0.xxxxx.mongodb.net/rishta-radar
+   MONGODB_URI=mongodb+srv://username:password@cluster0.xxxxx.mongodb.net/partnerscan
    ```
 
 ## Option 2: Local MongoDB Installation (Windows)
@@ -66,7 +66,7 @@ You have two options for MongoDB:
 
 5. **Use Default Connection** in `.env`:
    ```
-   MONGODB_URI=mongodb://localhost:27017/rishta-radar
+   MONGODB_URI=mongodb://localhost:27017/partnerscan
    ```
 
 ## Testing Connection

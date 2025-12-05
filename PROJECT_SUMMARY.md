@@ -10,24 +10,32 @@ A complete collaborative quiz application with MongoDB integration where:
 ## 🗂️ Project Structure
 
 ```
-rishta-radar/
+partnerscan/
 ├── 📁 models/
 │   ├── User.js              ✅ MongoDB user schema
 │   └── QuizSession.js       ✅ MongoDB quiz session schema
 │
 ├── 📁 public/
+│   ├── landing.html         ✅ Landing page
 │   ├── login.html           ✅ User authentication
-│   ├── signup.html          ✅ User registration
-│   ├── index.html           ✅ Homepage with link generator & dashboard
-│   ├── quiz.html            ✅ Quiz interface for User2
+│   ├── signup.html          ✅ User registration with confirm password
+│   ├── dashboard.html       ✅ Dashboard with relationship stage selector
+│   ├── quiz.html            ✅ Quiz interface with randomization
+│   ├── inbox.html           ✅ Results inbox with original question order
 │   ├── script.js            ✅ Quiz logic + MongoDB integration
-│   ├── auth.js              ✅ Login/signup handlers
-│   ├── home.js              ✅ Dashboard + session management
+│   ├── auth.js              ✅ Login/signup handlers with validation
+│   ├── home.js              ✅ Dashboard + session + tooltip management
+│   ├── inbox.js             ✅ Inbox results display
+│   ├── quiz-data.js         ✅ Categorized questions by relationship stage
 │   ├── style.css            ✅ Quiz styles
-│   ├── index.css            ✅ Homepage styles
-│   └── auth.css             ✅ Auth page styles
+│   ├── dashboard.css        ✅ Dashboard styles
+│   ├── landing.css          ✅ Landing page styles
+│   ├── auth.css             ✅ Auth page styles
+│   ├── toast.js             ✅ Toast notification system
+│   ├── favicon.svg          ✅ Custom favicon
+│   └── info-icon.svg        ✅ Info tooltip icon
 │
-├── server.js                ✅ Express + MongoDB backend
+├── server.js                ✅ Express + MongoDB backend with clean URLs
 ├── check-setup.js           ✅ Setup verification tool
 ├── package.json             ✅ Dependencies configured
 ├── .env                     ⚠️  Needs MongoDB URI + email config
@@ -38,6 +46,8 @@ rishta-radar/
     ├── README.md            ✅ Full documentation
     ├── QUICKSTART.md        ✅ Quick start guide
     ├── MONGODB_SETUP.md     ✅ Database setup instructions
+    ├── START_HERE.md        ✅ Getting started guide
+    ├── SETUP_CHECKLIST.md   ✅ Setup checklist
     └── PROJECT_SUMMARY.md   ✅ This file
 ```
 
@@ -69,17 +79,21 @@ rishta-radar/
 - Associate sessions with creators
 
 ### ✅ Quiz Flow
-- User2 takes quiz via shared link
+- Relationship stage selector (Situationship, Relationship, Fiancée)
+- Stage-specific question sets (15/15/21 questions)
+- Question randomization with original order tracking
+- User2 takes quiz via shortened shared link (?s=)
 - Real-time answer selection
 - Score calculation (Green/Red flags)
 - Verdict generation
-- Results submission to MongoDB
+- Results submission to MongoDB with originalIndex
 
 ### ✅ Results & Notifications
-- Save results to database
+- Save results to database with original question order
 - Email notifications to User1
-- Dashboard view of all sessions
-- Detailed results breakdown
+- Dashboard view of all sessions with stage badges
+- Inbox with detailed results in original question order
+- Interactive info tooltips showing full question lists
 
 ### ✅ Database Models
 
@@ -100,6 +114,7 @@ rishta-radar/
   creatorId: ObjectId (ref: User),
   creatorEmail: String,
   creatorName: String,
+  stage: String (situationship/relationship/fiancee),
   completed: Boolean,
   takerName: String,
   results: {
@@ -111,6 +126,11 @@ rishta-radar/
     bigRed: Number,
     verdict: String
   },
+  answers: [{
+    questionIndex: Number,
+    originalIndex: Number,
+    answer: String
+  }],
   createdAt: Date,
   completedAt: Date
 }
@@ -138,12 +158,13 @@ npm start            # Start server
 ```
 
 ### 4. Test the Flow
-1. Visit `http://localhost:3000/signup.html`
-2. Create account → redirected to homepage
-3. Click "Start" → copy generated link
-4. Open link in incognito/another browser
-5. Complete quiz as User2
-6. Check User1's dashboard for results
+1. Visit `http://localhost:3000/landing`
+2. Click "Get Started" → Sign up
+3. Select relationship stage (Situationship/Relationship/Fiancée)
+4. Click "Start" → copy generated link (shortened with ?s=)
+5. Open link in incognito/another browser
+6. Complete quiz as User2
+7. Check User1's inbox for detailed results in original order
 
 ## 📧 Email Configuration
 
@@ -185,15 +206,20 @@ For Gmail:
 ## 🎨 Customization Options
 
 ### Add More Questions
-Edit `public/script.js`:
+Edit `public/quiz-data.js`:
 ```javascript
-const quizData = [
-  {
-    category: "Your Category",
-    question: "Your question?",
-    choices: ["Option 1", "Option 2", "Option 3", "Option 4"]
-  }
-];
+const quizData = {
+  situationship: [
+    {
+      category: "Your Category",
+      question: "Your question?",
+      choices: ["Option 1", "Option 2", "Option 3", "Option 4"],
+      flags: ["situationship"]
+    }
+  ],
+  relationship: [...],
+  fiancee: [...]
+};
 ```
 
 ### Modify Scoring
@@ -204,7 +230,8 @@ Edit email HTML in `server.js` (line ~120)
 
 ### Update Styles
 - `public/style.css` - Quiz styles
-- `public/index.css` - Homepage styles
+- `public/dashboard.css` - Dashboard styles
+- `public/landing.css` - Landing page styles
 - `public/auth.css` - Login/signup styles
 
 ## 🐛 Common Issues

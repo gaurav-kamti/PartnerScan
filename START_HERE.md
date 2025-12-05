@@ -46,11 +46,12 @@ Visit: `http://localhost:3000`
 ## 🎮 How It Works
 
 ```
-1. User1 creates account → Generates shareable link
-2. User1 shares link with User2 (WhatsApp, email, etc.)
-3. User2 clicks link → Takes quiz
-4. Results automatically saved to MongoDB
-5. User1 receives email + sees results on dashboard
+1. User1 creates account → Selects relationship stage
+2. User1 generates shareable link (shortened with ?s=)
+3. User1 shares link with User2 (WhatsApp, email, etc.)
+4. User2 clicks link → Takes stage-specific quiz (randomized)
+5. Results automatically saved to MongoDB with original order
+6. User1 receives email + sees detailed results in inbox
 ```
 
 ## 🆘 Need Help?
@@ -69,11 +70,17 @@ Visit: `http://localhost:3000`
 
 ## ✅ What's Included
 
-- ✅ User authentication (signup/login)
+- ✅ User authentication with password confirmation
 - ✅ MongoDB database integration
-- ✅ Shareable quiz links
+- ✅ Relationship stage selector (Situationship/Relationship/Fiancée)
+- ✅ Stage-specific question sets
+- ✅ Question randomization with order tracking
+- ✅ Shortened shareable quiz links (?s=)
 - ✅ Email notifications
-- ✅ Results dashboard
+- ✅ Results inbox with original question order
+- ✅ Interactive info tooltips
+- ✅ Clean URLs without .html extensions
+- ✅ Mobile-optimized responsive design
 - ✅ Complete documentation
 
 ## 🚀 Next Steps
@@ -81,7 +88,7 @@ Visit: `http://localhost:3000`
 1. **Setup MongoDB** (5 minutes)
 2. **Run `npm run check`** to verify
 3. **Run `npm start`** to launch
-4. **Visit `http://localhost:3000/signup.html`**
+4. **Visit `http://localhost:3000/landing`**
 5. **Create account and test!**
 
 ---

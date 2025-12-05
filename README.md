@@ -1,14 +1,20 @@
-# PartnerScan - Collaborative Quiz App
+# PartnerScan - Relationship Compatibility Quiz
 
-A collaborative quiz application where User1 creates a shareable link and User2 takes the quiz, with results automatically sent back to User1.
+A collaborative relationship quiz application where User1 selects a relationship stage, creates a shareable link, and User2 takes the stage-specific quiz. Results are automatically saved and sent back to User1.
 
 ## Features
 
-- User authentication (signup/login)
-- Generate unique shareable quiz links
-- User2 takes quiz via shared link
+- User authentication with password confirmation
+- Relationship stage selector (Situationship, Relationship, Fiancée)
+- Stage-specific question sets (15/15/21 questions)
+- Question randomization with original order tracking
+- Shortened shareable quiz links (?s=)
+- Clean URLs without .html extensions
 - Results automatically sent to User1 via email
-- Dashboard to view all quiz sessions and results
+- Inbox with detailed results in original question order
+- Interactive info tooltips showing full question lists
+- Mobile-optimized responsive design
+- Dashboard to view all quiz sessions with stage badges
 
 ## Setup
 
@@ -44,25 +50,31 @@ npm start
 └─────────────────────────────────────────────────────────────────┘
                               │
                               ▼
-                    1. Visit /signup.html
+                    1. Visit /landing
                     2. Create account / Login
                               │
                               ▼
-                    3. Redirected to /index.html
+                    3. Redirected to /dashboard
                               │
                               ▼
-                    4. Click "Start" button
+              4. Select relationship stage:
+                 - Situationship (15 questions)
+                 - Relationship (15 questions)
+                 - Fiancée (21 questions)
                               │
                               ▼
-              5. Server generates unique session
-                 Saves to MongoDB with sessionId
+                    5. Click "Start" button
                               │
                               ▼
-              6. Get shareable link with sessionId
-                 (e.g., /quiz.html?sessionId=abc123)
+              6. Server generates unique session
+                 Saves to MongoDB with sessionId & stage
                               │
                               ▼
-              7. Copy & share link via WhatsApp/Email
+              7. Get shortened shareable link
+                 (e.g., /quiz?s=abc123)
+                              │
+                              ▼
+              8. Copy & share link via WhatsApp/Email
                               │
                               │
 ┌─────────────────────────────┴───────────────────────────────────┐
@@ -71,27 +83,30 @@ npm start
 └──────────────────────────────────────────────────────────────────┘
                               │
                               ▼
-                    8. Click shared link
+                    9. Click shared link
                               │
                               ▼
-              9. Taken to /quiz.html?sessionId=abc123
-                 Server verifies session exists
+              10. Taken to /quiz?s=abc123
+                  Server verifies session & loads stage questions
                               │
                               ▼
-                    10. Enter name (prompt)
+                    11. Enter name (prompt)
                               │
                               ▼
-                    11. Complete quiz questions
+              12. Questions randomized (order tracked)
                               │
                               ▼
-                    12. Submit results
+                    13. Complete quiz questions
                               │
                               ▼
-              13. Results saved to MongoDB
+                    14. Submit results
+                              │
+                              ▼
+              15. Results saved to MongoDB with originalIndex
                   Session marked as completed
                               │
                               ▼
-              14. Email sent to User1 with results
+              16. Email sent to User1 with results
                               │
                               │
 ┌─────────────────────────────┴───────────────────────────────────┐
@@ -100,13 +115,18 @@ npm start
 └──────────────────────────────────────────────────────────────────┘
                               │
                               ▼
-              15. Receives email notification
-                  OR views dashboard on homepage
+              17. Receives email notification
+                  OR clicks "Inbox" on dashboard
                               │
                               ▼
-              16. See all quiz sessions & results
+              18. See all quiz sessions with stage badges
                   - Pending sessions
                   - Completed sessions with scores
+                              │
+                              ▼
+              19. Click "View Results" for detailed answers
+                  - Answers shown in original question order
+                  - Full question text with User2's responses
 ```
 
 ## Tech Stack
@@ -125,7 +145,10 @@ npm start
 
 **QuizSession Model:**
 - sessionId (unique), creatorId, creatorEmail, creatorName
-- completed, takerName, results (brightGreen, green, etc.)
+- stage (situationship/relationship/fiancee)
+- completed, takerName
+- results (brightGreen, green, lightGreen, orange, red, bigRed, verdict)
+- answers (array with questionIndex, originalIndex, answer)
 - createdAt, completedAt
 
 ## Production Notes

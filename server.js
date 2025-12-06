@@ -161,7 +161,7 @@ app.post('/api/create-session', requireAuth, async (req, res) => {
       creatorId: user._id,
       creatorEmail: user.email,
       creatorName: user.name,
-      stage: stage || 'situationship'
+      stage: stage || 'situationship-female'
     });
     
     await quizSession.save();

@@ -25,37 +25,39 @@
     </div>
   </header>
   <div class="container">
-    <div class="card">
+    <!-- Card for Females -->
+    <div class="card card-female">
       <h2 id="title">Red & Green Flag</h2>
-      <p class="tagline">Ek chhota sa quiz jo bata dega<br />aage kya scene hone wala hai 😏</p>
+      <p class="tagline"><img src="/female-bow.png" alt="Female" style="width: 40px; height: 40px; vertical-align: middle; margin-right: 1.5px; transform: rotate(35deg); filter: drop-shadow(0 0 1.5px rgba(0,0,0,1));"> For Females</p>
+      <p class="tagline" style="font-size: 0.85rem; margin-top: 5px;">Ek chhota sa quiz jo bata dega<br />aage kya scene hone wala hai 😏</p>
       
       <!-- Relationship Stage Selector -->
       <div class="stage-selector" style="margin: 15px 0;">
         <p style="font-weight: 600; margin-bottom: 10px; color: white; font-size: 0.9rem;">Select Relationship Stage:</p>
         <div class="stage-options-compact">
           <label class="stage-option-compact">
-            <input type="radio" name="relationship-stage" value="situationship" checked>
+            <input type="radio" name="relationship-stage" value="situationship-female" checked>
             <span class="stage-label">
               <span class="stage-text">💭 Situationship</span>
-              <span class="info-icon" data-stage="situationship">
+              <span class="info-icon" data-stage="situationship-female">
                 <img src="/info-icon.svg" alt="info" />
               </span>
             </span>
           </label>
           <label class="stage-option-compact">
-            <input type="radio" name="relationship-stage" value="relationship">
+            <input type="radio" name="relationship-stage" value="relationship-female">
             <span class="stage-label">
               <span class="stage-text">💑 Relationship</span>
-              <span class="info-icon" data-stage="relationship">
+              <span class="info-icon" data-stage="relationship-female">
                 <img src="/info-icon.svg" alt="info" />
               </span>
             </span>
           </label>
           <label class="stage-option-compact">
-            <input type="radio" name="relationship-stage" value="fiance">
+            <input type="radio" name="relationship-stage" value="fiancee-female">
             <span class="stage-label">
               <span class="stage-text">💍 Fiancée (मंगेतर)</span>
-              <span class="info-icon" data-stage="fiance">
+              <span class="info-icon" data-stage="fiancee-female">
                 <img src="/info-icon.svg" alt="info" />
               </span>
             </span>
@@ -64,13 +66,64 @@
       </div>
       
       <div class="discription">
-        <span class="emoji">⏱</span> <span id="questionCount">7 questions</span> • 3-7 minutes
+        <span class="emoji">⏱</span> <span id="questionCount">15 questions</span> • 5-10 minutes
       </div>
       <button class="start-btn" id="startBtn">Create Quiz Link ➡️</button>
       <div id="shareLink" style="display:none; margin-top: 20px;">
         <p style="font-weight: 600; margin-bottom: 10px;">Share this link:</p>
         <input type="text" id="linkInput" readonly style="width: 100%; padding: 10px; border-radius: 8px; border: 2px solid #667eea; margin-bottom: 10px;">
         <button id="copyBtn" style="width: 100%; padding: 10px; background: linear-gradient(135deg, #667eea, #764ba2); color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: 600;">Copy Link</button>
+      </div>
+    </div>
+
+    <!-- Card for Males -->
+    <div class="card card-male">
+      <h2 id="title-male">Red & Green Flag</h2>
+      <p class="tagline"><img src="/male-bow.png" alt="Male" style="width: 40px; height: 40px; vertical-align: middle; margin-right: 1.5px; transform: rotate(35deg); filter: drop-shadow(0 0 1.5px rgba(0,0,0,1));"> For Males</p>
+      <p class="tagline" style="font-size: 0.85rem; margin-top: 5px;">Ek chhota sa quiz jo bata dega<br />aage kya scene hone wala hai 😏</p>
+      
+      <!-- Male Quiz Stages -->
+      <div class="stage-selector" style="margin: 15px 0;">
+        <p style="font-weight: 600; margin-bottom: 10px; color: white; font-size: 0.9rem;">Select Relationship Stage:</p>
+        <div class="stage-options-compact">
+          <label class="stage-option-compact">
+            <input type="radio" name="relationship-stage-male" value="situationship-male" checked>
+            <span class="stage-label">
+              <span class="stage-text">💭 Situationship</span>
+              <span class="info-icon" data-stage="situationship-male">
+                <img src="/info-icon.svg" alt="info" />
+              </span>
+            </span>
+          </label>
+          <label class="stage-option-compact">
+            <input type="radio" name="relationship-stage-male" value="relationship-male">
+            <span class="stage-label">
+              <span class="stage-text">💑 Relationship</span>
+              <span class="info-icon" data-stage="relationship-male">
+                <img src="/info-icon.svg" alt="info" />
+              </span>
+            </span>
+          </label>
+          <label class="stage-option-compact">
+            <input type="radio" name="relationship-stage-male" value="fiance-male">
+            <span class="stage-label">
+              <span class="stage-text">💍 Fiance (मंगेतर)</span>
+              <span class="info-icon" data-stage="fiance-male">
+                <img src="/info-icon.svg" alt="info" />
+              </span>
+            </span>
+          </label>
+        </div>
+      </div>
+      
+      <div class="discription">
+        <span class="emoji">⏱</span> <span id="questionCountMale">15 questions</span> • 5-10 minutes
+      </div>
+      <button class="start-btn" id="startBtnMale">Create Quiz Link ➡️</button>
+      <div id="shareLinkMale" style="display:none; margin-top: 20px;">
+        <p style="font-weight: 600; margin-bottom: 10px;">Share this link:</p>
+        <input type="text" id="linkInputMale" readonly style="width: 100%; padding: 10px; border-radius: 8px; border: 2px solid #667eea; margin-bottom: 10px;">
+        <button id="copyBtnMale" style="width: 100%; padding: 10px; background: linear-gradient(135deg, #667eea, #764ba2); color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: 600;">Copy Link</button>
       </div>
     </div>
   </div>

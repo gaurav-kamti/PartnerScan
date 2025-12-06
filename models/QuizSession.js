@@ -21,8 +21,8 @@ const quizSessionSchema = new mongoose.Schema({
   },
   stage: {
     type: String,
-    enum: ['situationship', 'relationship', 'fiance'],
-    default: 'situationship'
+    enum: ['situationship-female', 'relationship-female', 'fiancee-female', 'situationship-male', 'relationship-male', 'fiance-male'],
+    default: 'situationship-female'
   },
   completed: {
     type: Boolean,

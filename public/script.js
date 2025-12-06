@@ -367,6 +367,273 @@ const choiceToValueMap = {
     "Dosto ko chhodkar, sirf relationship aur hum dono par focus karna chahiye.": "Big Red",
     "Main bas itna expect karungi ki woh apne personal aur dosto ke liye time manage kare, main interfere nahi karungi.": "Bright Green",
   },
+  // Male Questions Mapping
+  "Defining Commitment": {
+    "Normal hai, main bhi karunga.": "Bright Green",
+    "Zyada mat post karna, public mein show-off theek nahi.": "Orange",
+    "Sirf close friends ko dikhana.": "Light Green",
+    "Main prefer karunga ki tum mat karo.": "Big Red",
+  },
+  "Long-Term View": {
+    "3-6 mahine": "Light Green",
+    "1 saal": "Bright Green",
+    "Jab feel ho, time se farak nahi padta.": "Orange",
+    "Aisi cheezon ke baare mein socha nahi hai.": "Red",
+  },
+  "Handling Exes": {
+    "Bilkul nahi, past is past.": "Bright Green",
+    "Casual greetings/updates.": "Light Green",
+    "Agar common friends ho toh.": "Orange",
+    "Depends on the reason, agar koi help chahiye ho toh.": "Red",
+  },
+  "Personal Space": {
+    "Jitna tum bolo, I don't need much.": "Orange",
+    "Apne hobbies/work ke liye time.": "Bright Green",
+    "Pure weekend friends ke saath.": "Red",
+    "Mujhse depend karta hai, kabhi zyada, kabhi kam.": "Big Red",
+  },
+  "Support System": {
+    "Sirf apne closest friends se.": "Light Green",
+    "Family se.": "Green",
+    "I deal with it myself.": "Big Red",
+    "Jise bhi main us waqt sabse close feel karun.": "Bright Green",
+  },
+  "Financial View": {
+    "Bohut, I save a major part of my income.": "Bright Green",
+    "Important hai, but enjoyment zyada zaroori hai.": "Orange",
+    "Bas itna ki bills time pe pay ho jayein.": "Red",
+    "Abhi toh career pe focus hai, baad mein dekhenge.": "Big Red",
+  },
+  "Conflict Resolution": {
+    "Pehle usko space deta hoon, phir rational baat karta hoon.": "Bright Green",
+    "Ignore karta hoon jab tak situation theek na ho jaye.": "Red",
+    "Uske point ko samajhne ki koshish karta hoon.": "Green",
+    "Main cut off kar deta hoon agar baat bigad jaye.": "Big Red",
+  },
+  "Work-Life Balance": {
+    "Kaam, work comes first.": "Green",
+    "Party cancel karke work karunga.": "Bright Green",
+    "Depend karta hai mood pe.": "Red",
+    "Party karunga, kaam baad mein ho jayega.": "Orange",
+  },
+  "Social Responsibility": {
+    "Honesty and Integrity.": "Bright Green",
+    "Loyalty towards people you care about.": "Green",
+    "Success and ability to provide.": "Orange",
+    "Kindness and Empathy.": "Light Green",
+  },
+  "Jealousy/Possessiveness": {
+    "Cool, bas mujhe bata dena.": "Bright Green",
+    "Thodi si insecurity ho sakti hai.": "Light Green",
+    "Achha nahi lagega, par trust karta hoon.": "Orange",
+    "Mujhe detailed update chahiye.": "Big Red",
+  },
+  "Coping Mechanism": {
+    "Exercise ya koi hobby.": "Bright Green",
+    "Dosto ke saath time spend karna.": "Light Green",
+    "Alcohol ya binge-watching.": "Big Red",
+    "Akele rehna, silent mode pe.": "Red",
+  },
+  "Punctuality/Routine": {
+    "Bahut structured, sab time pe hona chahiye.": "Green",
+    "Thoda flexible, but main things are on time.": "Bright Green",
+    "Bilkul flexible, I go with the flow.": "Red",
+    "Bahut random, main late ho jata hoon aksar.": "Big Red",
+  },
+  "Physical Health/Image": {
+    "Regular exercise and focus on health.": "Bright Green",
+    "Jab mood ho tab, but not a priority.": "Orange",
+    "Jitna zaroori ho presentable rehne ke liye.": "Light Green",
+    "Bilkul kam, I don't care much about it.": "Red",
+  },
+  "Anger Management": {
+    "Jab injustice dekha, I tried to resolve it calmly.": "Green",
+    "Jab plans kharab ho gaye, I got a bit loud.": "Orange",
+    "Jab kisi ne disrespect kiya, I shouted back.": "Big Red",
+    "Mujhe gussa kam aata hai, I usually withdraw.": "Light Green",
+  },
+  "Handling Criticism": {
+    "Open to change, agar woh helpful hai.": "Bright Green",
+    "Thoda defensive, but I'll think about it.": "Light Green",
+    "I'll ask for the reason, but won't change.": "Red",
+    "Offended ho jaunga, kyunki woh meri marzi hai.": "Big Red",
+  },
+  // Male Relationship Questions Mapping
+  "Defining the Status (Direct)": {
+    "Casual Date hi bolunga": "Green",
+    "Friend hi bolunga": "Big Red",
+    "Relationship, if you introduce me": "Light Green",
+    "Pata nahi, jaisa tum bolo": "Green",
+  },
+  "Commitment Timeline (Direct)": {
+    "Dekhenge, abhi itni jaldi kya hai": "Red",
+    "Main toh serious hoon, shaadi tak ka soch sakta hoon": "Bright Green",
+    "Jab tak chal raha hai, theek hai": "Orange",
+    "Jab tum comfortable ho, tab discuss karenge": "Green",
+  },
+  "Financial Transparency (Direct)": {
+    "Sirf advice doonga": "Orange",
+    "Jo main manage kar sakta hoon, utna bata doonga": "Green",
+    "Apni har detail bataunga, hum ek team hain": "Bright Green",
+    "Depends karta hai, tumhara kitna bada problem hai": "Red",
+  },
+  "Privacy & Boundaries (Direct)": {
+    "Koi baat nahi, sabka personal space hota hai": "Bright Green",
+    "Thoda bura lagega, kya chupa rahi ho?": "Orange",
+    "Mujhe toh pata hona chahiye, hum relationship mein hain": "Red",
+    "Mera phone bhi locked hi rahega ab se": "Big Red",
+  },
+  "Public vs. Private (Direct)": {
+    "Casual friend ki tarah, haath bhi nahi pakadunga": "Big Red",
+    "Sirf 'hello' bolkar aage badh jaunga": "Red",
+    "Apna partner hi introduce karunga, agar unko pata chal jaye toh chal jaye": "Green",
+    "Jaise normal couple karte hain, public display of affection nahi": "Bright Green",
+  },
+  "Conflict Resolution (Indirect)": {
+    "Hamesha ladke ko, kyunki woh zyada mature hote hain": "Orange",
+    "Usko jiski galti ho, chahe koi bhi ho": "Bright Green",
+    "Pehle usko bolna chahiye jisko relationship ki zyada fikar hai": "Green",
+    "Pehle tumko bolna chahiye, tum jaldi calm ho jati ho": "Red",
+  },
+  "Girl's Career (Indirect)": {
+    "Bahut proud feel karunga, usko support karunga": "Bright Green",
+    "Thoda insecure ho jaunga, par adjust kar loonga": "Orange",
+    "Mujhe thoda 'man of the house' jaisa feel karna hai, toh adjust karna mushkil hoga": "Big Red",
+    "Achcha hai, at least financial load kam hoga": "Red",
+  },
+  "Dealing with Friends (Indirect)": {
+    "Doston ko bolunga ki woh galat hain, aur tumhe defend karunga": "Bright Green",
+    "Unko bolunga ki aisi baatein mat karein, par tumhe nahi bataunga": "Orange",
+    "Doston se kam milna start kar doonga": "Red",
+    "Tumhe bolunga ki thoda 'fun' hona seekho, warna woh aana band kar denge": "Big Red",
+  },
+  "Past Relationships (Indirect)": {
+    "Woh kitni supportive thi, ya usne mujhe kitna hurt kiya (Focus on learning)": "Bright Green",
+    "Uske looks ya physical attraction (Focus on superficial)": "Red",
+    "Uski galtiyan aur failure points (Focus on blame)": "Big Red",
+    "Yeh sab baatein bekar hain, aage badhte hain (Focus on avoidance)": "Orange",
+  },
+  "Alone Time (Indirect)": {
+    "Definitely, enjoy karo. Main bhi apne doston ke saath plan bana lunga": "Bright Green",
+    "Theek hai, par mujhe bata dena tum free kab ho": "Light Green",
+    "Tumhe bore toh nahi ho raha hai? Mere saath time spend karna achcha nahi lag raha?": "Orange",
+    "Kya problem hai? Kya tum mujhse kuch chupa rahi ho?": "Big Red",
+  },
+  "Stress & Anger (Physiological/Emotional)": {
+    "Gussa nikalne ke liye chilla deta hoon ya cheezein fek deta hoon": "Big Red",
+    "Thoda time akele rehkar calm down hone ki koshish karta hoon": "Green",
+    "Apne close friend/partner se baat karke hal nikalta hoon": "Bright Green",
+    "Smoking/drinking karta hoon, ya phone off kar deta hoon": "Red",
+  },
+  "Emotional Need (Physiological/Emotional)": {
+    "Mujhe akela chhod do, main khud hi theek ho jaunga": "Red",
+    "Physical comfort, jaise ki hug/cuddle": "Bright Green",
+    "Sirf suno, koi advice mat do, bas mere paas raho": "Green",
+    "Mujhe koi solution do ya mera mind divert karo": "Light Green",
+  },
+  "Jealousy Threshold (Physiological/Emotional)": {
+    "Mujhe koi farak nahi padta, tum par pura trust hai": "Bright Green",
+    "Thoda awkward feel hota hai, par tumhe nahi bataunga": "Light Green",
+    "Main us ladke ko seedha confront karunga": "Orange",
+    "Main tum par shak karna start kar doonga, aur tumse explanation maangunga": "Big Red",
+  },
+  "Apology & Acceptance (Physiological/Emotional)": {
+    "Ek baar sorry bol diya, ab main kya kar sakta hoon": "Big Red",
+    "Jab tak tumhare chehre par smile nahi aa jati, tab tak main try karta rahunga": "Bright Green",
+    "Thoda time doonga, aur phir kuch der baad dobara baat karunga": "Green",
+    "Ulta main hi gussa ho jaunga ki abhi bhi kyu naraz ho": "Big Red",
+  },
+  "Communication Need (Physiological/Emotional)": {
+    "Daily 2-3 calls, Weekend pe milna": "Bright Green",
+    "Jab bhi tum bolo": "Green",
+    "Jab main free hoon tab": "Red",
+    "Jab tak tum interest dikhao": "Big Red",
+  },
+  // Male Fiance Questions Mapping
+  "Post-Marriage Finances": {
+    "Meri salary meri, tumhari tumhari. Bills divide kar lenge": "Green",
+    "Ek joint account kho lenge jismein dono daalenge": "Bright Green",
+    "Main hi sab manage karunga, tum bas budget bata dena": "Red",
+    "Pehle tumhari family ki zaroorat puri karenge, phir dekhenge": "Orange",
+  },
+  "Parental Influence": {
+    "Jo unhone bola, wahi final hoga": "Big Red",
+    "Pehle main tumse discuss karunga, phir unko samjhaunga": "Bright Green",
+    "Humari family life mein unka interference nahi hona chahiye": "Light Green",
+    "Main unke saath hi rahoonga, tumhein adjust karna padega": "Red",
+  },
+  "Relocation": {
+    "Main apna career chorh nahi sakta, tumhe hi sacrifice karna padega": "Red",
+    "Dekhte hain, agar tumhari salary zyada ho toh main sochunga": "Orange",
+    "Hum dono milkar faisla lenge ki kiske liye behtar hai": "Bright Green",
+    "Mujhe koi problem nahi, main kahin bhi adjust kar loonga": "Green",
+  },
+  "Time Allocation": {
+    "Poora din bas apne family members ke saath bitaunga": "Orange",
+    "Morning tumhare saath, evening main apne doston/family ko doonga": "Green",
+    "Humari choti family (tum aur main) priority hogi": "Bright Green",
+    "Jaise abhi karte hain, waise hi chalega": "Light Green",
+  },
+  "Disagreement Handling": {
+    "Jo zyada mature ho, uska": "Green",
+    "Mera hi hona chahiye, I am the man of the house": "Big Red",
+    "Humesha solution dhundhenge jo dono ko comfortable ho": "Bright Green",
+    "Jis se main darrunga (galti se), uska": "Red",
+  },
+  "Partner's Friends": {
+    "Bohot zyada distance, milna-julna band kar dena chahiye": "Big Red",
+    "Sirf group mein ya jab tum mere saath ho tab": "Red",
+    "Friendship maintain karni chahiye, jab tak trust break na ho": "Bright Green",
+    "Jo friends tumhe pasand nahi hain, unse nahi milna chahiye": "Orange",
+  },
+  "Handling Failure": {
+    "Main bolunga 'tumse nahi hoga', ya 'main hi kar loonga'": "Big Red",
+    "Tumhe himmat doonga aur next time ke liye help karunga": "Bright Green",
+    "Mujhe bohot gussa aayega, itna time waste kar diya": "Red",
+    "Poochunga ki kya tumne poori mehnat ki thi?": "Orange",
+  },
+  "Ideal Wife Trait": {
+    "Jo mere family members ki care kare aur ghar sambhaale": "Orange",
+    "Jo apne career aur ghar ko achhe se balance kar le": "Green",
+    "Jo independent ho aur mujhe challenge kar sake": "Bright Green",
+    "Jo meri har baat maane aur argue na kare": "Red",
+  },
+  "Leisure Time": {
+    "Woh jo mujhe pasand hain ya mere doston ko pasand hain": "Red",
+    "Aise hobbies jo hum dono saath mein enjoy kar sakein": "Bright Green",
+    "Tumhare hobbies ko main support karunga, par main apna karunga": "Green",
+    "Jo meri family ko achha lage, wahi karenge": "Orange",
+  },
+  "Unsolicited Advice": {
+    "Us dost par trust karunga aur tumse chhipakar tumhe monitor karunga": "Big Red",
+    "Seedha tumse poochunga aur situation clear karunga": "Bright Green",
+    "Main us dost ko samjhaunga ki humare beech mein na pade": "Green",
+    "Ignore kar doonga, mujhe tum par trust hai": "Light Green",
+  },
+  "Expressing Love": {
+    "Us time main pyaar nahi dikhaunga, jab mood theek hoga tab karenge": "Orange",
+    "Physical distance bana loonga ya silent ho jaunga": "Green",
+    "Tab bhi tumhari care karunga, taaki tum safe feel karo": "Bright Green",
+    "Main apna gussa tum par nikal doonga aur baad mein sorry bolunga": "Red",
+  },
+  "Handling Tears": {
+    "Emotional ho jaunga aur main bhi rone lagunga": "Orange",
+    "Tumhe chup karaunga, hal nikalunga, aur comfort doonga": "Bright Green",
+    "Poochunga ki *dikhawa toh nahi kar rahi ho?*": "Big Red",
+    "Main wahan se chala jaunga, mujhe drama pasand nahi hai": "Red",
+  },
+  "Coping Mechanism": {
+    "Bahut zyada kaam karunga ya khelunga (avoidance)": "Orange",
+    "Apne feelings ko pi jaunga aur kisi ko nahi bataunga": "Red",
+    "Tumse baat karunga ya kissi trusted source se advice loonga": "Bright Green",
+    "Smoking/drinking karunga ya phone switch off kar doonga (maladaptive)": "Big Red",
+  },
+  "Need for Approval": {
+    "Mera har decision tumhe pasand hona chahiye, warna main change kar doonga": "Red",
+    "Main tumhari rai loonga par last decision mera hoga": "Orange",
+    "Mera decision mera hai, tumhari approval ki zaroorat nahi hai": "Light Green",
+    "Humara decision hona chahiye, not just mine or yours": "Bright Green",
+  },
 };
 
 // Shuffle questions for randomization
@@ -387,14 +654,23 @@ let shuffledQuizData = [];
 function getQuizDataForStage(stage) {
   let questions;
   switch(stage) {
-    case 'situationship':
+    case 'situationship-female':
       questions = situationshipQuestions;
       break;
-    case 'relationship':
+    case 'relationship-female':
       questions = relationshipQuestions;
       break;
-    case 'fiance':
+    case 'fiancee-female':
       questions = fianceQuestions;
+      break;
+    case 'situationship-male':
+      questions = situationshipMaleQuestions;
+      break;
+    case 'relationship-male':
+      questions = relationshipMaleQuestions;
+      break;
+    case 'fiance-male':
+      questions = fianceMaleQuestions;
       break;
     default:
       questions = situationshipQuestions;

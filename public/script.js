@@ -854,7 +854,17 @@ function showResults() {
 
 // Get session ID from URL
 const urlParams = new URLSearchParams(window.location.search);
-const sessionId = urlParams.get('s') || urlParams.get('sessionId');
+let sessionId = urlParams.get('s') || urlParams.get('sessionId');
+
+// Extract actual session ID if nickname is present (format: nickname-uuid)
+if (sessionId && sessionId.includes('-')) {
+  // Find the last occurrence of UUID pattern
+  const uuidPattern = /[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+  const match = sessionId.match(uuidPattern);
+  if (match) {
+    sessionId = match[0];
+  }
+}
 
 // Check if this is a shared quiz
 async function checkSession() {

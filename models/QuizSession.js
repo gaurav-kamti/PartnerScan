@@ -24,6 +24,18 @@ const quizSessionSchema = new mongoose.Schema({
     enum: ['situationship-female', 'relationship-female', 'fiancee-female', 'situationship-male', 'relationship-male', 'fiance-male'],
     default: 'situationship-female'
   },
+  nickname: {
+    type: String,
+    default: ''
+  },
+  expiresAt: {
+    type: Date,
+    default: () => new Date(Date.now() + 12 * 60 * 60 * 1000) // 12 hours from now
+  },
+  archived: {
+    type: Boolean,
+    default: false
+  },
   completed: {
     type: Boolean,
     default: false

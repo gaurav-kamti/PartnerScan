@@ -17,8 +17,34 @@ const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/rishta
 
 // Connect to MongoDB
 mongoose.connect(MONGODB_URI)
-  .then(() => console.log('✅ MongoDB Connected'))
+  .then(() => {
+    console.log('✅ MongoDB Connected');
+    // Start cleanup job
+    startCleanupJob();
+  })
   .catch(err => console.error('❌ MongoDB Error:', err.message));
+
+// Cleanup expired sessions
+async function cleanupExpiredSessions() {
+  try {
+    const now = new Date();
+    const result = await QuizSession.deleteMany({
+      expiresAt: { $lt: now },
+      completed: false
+    });
+    if (result.deletedCount > 0) {
+      console.log(`🧹 Cleaned up ${result.deletedCount} expired session(s)`);
+    }
+  } catch (error) {
+    console.error('❌ Cleanup error:', error.message);
+  }
+}
+
+// Run cleanup every hour
+function startCleanupJob() {
+  cleanupExpiredSessions(); // Run immediately on startup
+  setInterval(cleanupExpiredSessions, 60 * 60 * 1000); // Run every hour
+}
 
 // Middleware
 app.use(bodyParser.json());
@@ -157,7 +183,7 @@ app.post('/api/create-session', requireAuth, async (req, res) => {
       return res.status(404).json({ error: 'User not found' });
     }
     
-    const { stage } = req.body;
+    const { stage, nickname } = req.body;
     const sessionId = uuidv4();
     
     const quizSession = new QuizSession({
@@ -165,7 +191,8 @@ app.post('/api/create-session', requireAuth, async (req, res) => {
       creatorId: user._id,
       creatorEmail: user.email,
       creatorName: user.name,
-      stage: stage || 'situationship-female'
+      stage: stage || 'situationship-female',
+      nickname: nickname || ''
     });
     
     await quizSession.save();
@@ -184,6 +211,15 @@ app.get('/api/session/:sessionId', async (req, res) => {
     
     if (!session) {
       return res.status(404).json({ error: 'Session not found' });
+    }
+    
+    // Check if expired
+    if (new Date() > session.expiresAt) {
+      return res.status(410).json({ error: 'Quiz link has expired' });
+    }
+    
+    if (session.completed) {
+      return res.status(400).json({ error: 'Quiz already completed' });
     }
     
     res.json({
@@ -230,16 +266,22 @@ app.post('/api/submit-results', async (req, res) => {
 // Get user's quiz sessions
 app.get('/api/my-sessions', requireAuth, async (req, res) => {
   try {
-    const sessions = await QuizSession.find({ creatorId: req.session.userId })
-      .sort({ createdAt: -1 });
+    const sessions = await QuizSession.find({ 
+      creatorId: req.session.userId,
+      archived: { $ne: true }
+    }).sort({ createdAt: -1 });
     
     const userSessions = sessions.map(s => {
+      const isExpired = new Date() > s.expiresAt;
       return {
         id: s.sessionId,
+        nickname: s.nickname,
         completed: s.completed,
         takerName: s.takerName,
         createdAt: s.createdAt,
         completedAt: s.completedAt,
+        expiresAt: s.expiresAt,
+        expired: isExpired,
         results: s.results
       };
     });
@@ -270,6 +312,44 @@ app.get('/api/result/:sessionId', async (req, res) => {
       results: session.results,
       completedAt: session.completedAt
     });
+  } catch (error) {
+    res.status(500).json({ error: 'Server error' });
+  }
+});
+
+// Delete session
+app.delete('/api/session/:sessionId', requireAuth, async (req, res) => {
+  try {
+    const { sessionId } = req.params;
+    
+    const session = await QuizSession.findOne({ sessionId, creatorId: req.session.userId });
+    
+    if (!session) {
+      return res.status(404).json({ error: 'Session not found' });
+    }
+    
+    await QuizSession.deleteOne({ sessionId });
+    res.json({ success: true, message: 'Session deleted' });
+  } catch (error) {
+    res.status(500).json({ error: 'Server error' });
+  }
+});
+
+// Archive session
+app.patch('/api/session/:sessionId/archive', requireAuth, async (req, res) => {
+  try {
+    const { sessionId } = req.params;
+    
+    const session = await QuizSession.findOne({ sessionId, creatorId: req.session.userId });
+    
+    if (!session) {
+      return res.status(404).json({ error: 'Session not found' });
+    }
+    
+    session.archived = !session.archived;
+    await session.save();
+    
+    res.json({ success: true, archived: session.archived });
   } catch (error) {
     res.status(500).json({ error: 'Server error' });
   }

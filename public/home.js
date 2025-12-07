@@ -96,6 +96,7 @@ window.onload = async () => {
   // Start button - create session
   document.getElementById('startBtn').addEventListener('click', async () => {
     const selectedStage = document.querySelector('input[name="relationship-stage"]:checked').value;
+    const nickname = document.getElementById('nicknameInput').value.trim();
     
     showLoading('Creating quiz link...');
     
@@ -103,14 +104,23 @@ window.onload = async () => {
       const response = await fetch('/api/create-session', { 
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ stage: selectedStage })
+        body: JSON.stringify({ stage: selectedStage, nickname })
       });
       const data = await response.json();
       hideLoading();
       
       if (response.ok) {
-        document.getElementById('linkInput').value = data.shareLink;
+        // Add nickname to URL if provided
+        let link = data.shareLink;
+        if (nickname) {
+          const urlParts = link.split('?s=');
+          const cleanNickname = nickname.replace(/[^a-zA-Z0-9]/g, '-').toLowerCase();
+          link = `${urlParts[0]}?s=${cleanNickname}-${urlParts[1]}`;
+        }
+        
+        document.getElementById('linkInput').value = link;
         document.getElementById('shareLink').style.display = 'block';
+        document.getElementById('nicknameInput').value = '';
         showToast('Quiz link created! 🎉', 'success');
       } else {
         showToast(data.error || 'Failed to create link', 'error');
@@ -157,6 +167,7 @@ window.onload = async () => {
     startBtnMale.addEventListener('click', async () => {
       const selectedStage = document.querySelector('input[name="relationship-stage-male"]:checked');
       const stage = selectedStage ? selectedStage.value : 'situationship-male';
+      const nickname = document.getElementById('nicknameInputMale').value.trim();
       
       showLoading('Creating quiz link...');
       
@@ -164,16 +175,24 @@ window.onload = async () => {
         const response = await fetch('/api/create-session', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ stage })
+          body: JSON.stringify({ stage, nickname })
         });
         
         const data = await response.json();
         hideLoading();
         
         if (response.ok) {
-          const link = `${window.location.origin}/quiz?s=${data.sessionId}`;
+          let link = `${window.location.origin}/quiz?s=${data.sessionId}`;
+          
+          // Add nickname to URL if provided
+          if (nickname) {
+            const cleanNickname = nickname.replace(/[^a-zA-Z0-9]/g, '-').toLowerCase();
+            link = `${window.location.origin}/quiz?s=${cleanNickname}-${data.sessionId}`;
+          }
+          
           linkInputMale.value = link;
           shareLinkMale.style.display = 'block';
+          document.getElementById('nicknameInputMale').value = '';
           showToast('Quiz link created! 🎉', 'success');
         } else {
           showToast(data.error || 'Failed to create link', 'error');

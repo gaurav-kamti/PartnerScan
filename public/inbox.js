@@ -71,16 +71,21 @@ async function loadResults() {
       }
       
       return `
-        <div class="result-card">
+        <div class="result-card" id="session-${session.id}">
           <div class="result-header">
-            <div class="result-name">💕 ${session.takerName || 'Anonymous'}</div>
-            <div class="result-date">${new Date(session.completedAt).toLocaleDateString('en-IN', {
-              day: 'numeric',
-              month: 'short',
-              year: 'numeric',
-              hour: '2-digit',
-              minute: '2-digit'
-            })}</div>
+            <div>
+              <div class="result-name">💕 ${session.takerName || 'Anonymous'}</div>
+            </div>
+            <div style="text-align: right;">
+              <div class="result-date">${new Date(session.completedAt).toLocaleDateString('en-IN', {
+                day: 'numeric',
+                month: 'short',
+                year: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+              })}</div>
+              <button onclick="deleteSession('${session.id}')" style="margin-top: 8px; padding: 6px 12px; background: #ff4444; color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 0.85rem; transition: all 0.3s ease;" onmouseover="this.style.background='#cc0000'" onmouseout="this.style.background='#ff4444'">Delete</button>
+            </div>
           </div>
           
           <div class="flag-summary">
@@ -229,10 +234,106 @@ function fallbackCopy(text) {
   document.body.removeChild(textarea);
 }
 
+// Delete session
+async function deleteSession(sessionId) {
+  if (!confirm('Are you sure you want to delete this result? This action cannot be undone.')) {
+    return;
+  }
+  
+  try {
+    const response = await fetch(`/api/session/${sessionId}`, {
+      method: 'DELETE'
+    });
+    
+    if (response.ok) {
+      // Remove from DOM with animation
+      const card = document.getElementById(`session-${sessionId}`);
+      if (card) {
+        card.style.transition = 'all 0.3s ease';
+        card.style.opacity = '0';
+        card.style.transform = 'translateX(-20px)';
+        setTimeout(() => {
+          card.remove();
+          // Check if inbox is now empty
+          const container = document.getElementById('results-container');
+          if (container.children.length === 0) {
+            loadResults();
+          }
+        }, 300);
+      }
+      showToast('Result deleted successfully', 'success');
+      loadSessionsSidebar(); // Reload sidebar
+    } else {
+      showToast('Failed to delete result', 'error');
+    }
+  } catch (error) {
+    showToast('Failed to delete result', 'error');
+  }
+}
+
+// Load sessions for sidebar
+async function loadSessionsSidebar() {
+  try {
+    const response = await fetch('/api/my-sessions');
+    const sessions = await response.json();
+    
+    // Filter only pending (not completed) sessions
+    const pendingSessions = sessions.filter(s => !s.completed);
+    
+    const container = document.getElementById('sessions-sidebar');
+    
+    if (pendingSessions.length === 0) {
+      container.innerHTML = `
+        <div style="text-align: center; padding: 20px; color: #999;">
+          <div style="font-size: 2rem; margin-bottom: 10px;">✅</div>
+          <p style="font-size: 0.9rem; margin: 0;">No pending sessions</p>
+          <p style="font-size: 0.8rem; margin-top: 5px; color: #bbb;">All quizzes completed!</p>
+        </div>
+      `;
+      return;
+    }
+    
+    container.innerHTML = pendingSessions.map(session => {
+      let statusBadge = '';
+      let statusColor = '';
+      
+      if (session.expired && !session.completed) {
+        statusBadge = '⏰ Expired';
+        statusColor = '#888';
+      } else if (session.completed) {
+        statusBadge = '✅ Completed';
+        statusColor = '#4CAF50';
+      } else {
+        statusBadge = '⏳ Pending';
+        statusColor = '#FFA726';
+      }
+      
+      const displayName = session.nickname || (session.completed ? session.takerName : 'Waiting...');
+      
+      return `
+        <div style="background: #f8f9fa; padding: 12px; border-radius: 10px; margin-bottom: 10px; border-left: 4px solid ${statusColor};">
+          <div style="font-weight: 600; color: #333; margin-bottom: 5px; font-size: 0.95rem;">${displayName}</div>
+          <div style="font-size: 0.8rem; color: #666; margin-bottom: 8px;">
+            ${new Date(session.createdAt).toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })}
+          </div>
+          <span style="display: inline-block; padding: 4px 8px; background: ${statusColor}; color: white; border-radius: 6px; font-size: 0.75rem; font-weight: 600;">${statusBadge}</span>
+        </div>
+      `;
+    }).join('');
+  } catch (error) {
+    document.getElementById('sessions-sidebar').innerHTML = `
+      <div style="text-align: center; padding: 20px; color: #999;">
+        <p style="font-size: 0.9rem;">Failed to load</p>
+      </div>
+    `;
+  }
+}
+
 // Initialize
 window.onload = async () => {
   const user = await checkAuth();
   if (!user) return;
   
   loadResults();
+  loadSessionsSidebar();
 };

@@ -131,12 +131,51 @@ npm start
 
 ## Tech Stack
 
-- Frontend: HTML, CSS, JavaScript
-- Backend: Node.js + Express
-- Database: MongoDB + Mongoose
-- Session Management: express-session + connect-mongo
-- Email: nodemailer
-- Authentication: bcryptjs
+- **Frontend**: HTML5, CSS3, Vanilla JavaScript
+- **Backend**: Node.js + Express.js
+- **Database**: MongoDB + Mongoose ODM
+- **Session Management**: express-session + connect-mongo
+- **Email**: nodemailer
+- **Authentication**: bcryptjs (password hashing)
+- **IDs**: UUID v4
+
+## Project Structure
+
+```
+partnerscan/
+├── models/
+│   ├── User.js              # User schema
+│   └── QuizSession.js       # Quiz session schema
+├── public/
+│   ├── landing.html         # Landing page
+│   ├── login.html           # Login page
+│   ├── signup.html          # Signup page
+│   ├── dashboard.html       # Dashboard with stage selector
+│   ├── quiz.html            # Quiz interface
+│   ├── inbox.html           # Results inbox
+│   ├── privacy.html         # Privacy policy
+│   ├── terms.html           # Terms of service
+│   ├── script.js            # Quiz logic
+│   ├── auth.js              # Authentication logic
+│   ├── home.js              # Dashboard logic
+│   ├── inbox.js             # Inbox logic
+│   ├── quiz-data.js         # Question data by stage
+│   ├── toast.js             # Toast notifications
+│   ├── style.css            # Quiz styles
+│   ├── dashboard.css        # Dashboard styles
+│   ├── landing.css          # Landing page styles
+│   ├── auth.css             # Auth page styles
+│   └── images/
+│       ├── favicon.png      # Browser tab icon
+│       ├── logo.png         # Webpage logo
+│       ├── info-icon.svg    # Info tooltip icon
+│       ├── female-bow.png   # Female card icon
+│       └── male-bow.png     # Male card icon
+├── server.js                # Express server
+├── check-setup.js           # Setup verification
+├── package.json             # Dependencies
+└── .env                     # Environment variables
+```
 
 ## Database Schema
 

@@ -32,8 +32,12 @@ partnerscan/
 │   ├── landing.css          ✅ Landing page styles
 │   ├── auth.css             ✅ Auth page styles
 │   ├── toast.js             ✅ Toast notification system
-│   ├── favicon.svg          ✅ Custom favicon
-│   └── info-icon.svg        ✅ Info tooltip icon
+│   └── 📁 images/
+│       ├── favicon.png      ✅ Browser tab icon
+│       ├── logo.png         ✅ Webpage logo
+│       ├── info-icon.svg    ✅ Info tooltip icon
+│       ├── female-bow.png   ✅ Female card icon
+│       └── male-bow.png     ✅ Male card icon
 │
 ├── server.js                ✅ Express + MongoDB backend with clean URLs
 ├── check-setup.js           ✅ Setup verification tool

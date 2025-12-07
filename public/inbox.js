@@ -116,9 +116,14 @@ async function loadResults() {
           
           ${detailedAnswers.length > 0 ? `
             <div class="detailed-answers">
-              <button class="toggle-details" onclick="toggleDetails(${index})">
-                View All ${detailedAnswers.length} Answers 📝
-              </button>
+              <div style="display: flex; gap: 10px; margin-bottom: 10px;">
+                <button class="toggle-details" id="toggle-btn-${index}" onclick="toggleDetails(${index})" style="flex: 1;">
+                  View All ${detailedAnswers.length} Answers 📝
+                </button>
+                <button class="toggle-details" onclick="shareResults(${index}, '${(session.takerName || 'Anonymous').replace(/'/g, "\\'")}', ${JSON.stringify(results).replace(/"/g, '&quot;')}, ${JSON.stringify(detailedAnswers).replace(/"/g, '&quot;')})" style="width: 60px; padding: 12px 10px; background: linear-gradient(135deg, #667eea, #764ba2); display: flex; align-items: center; justify-content: center;" title="Share Results">
+                  <img src="/images/share-icon.svg" alt="Share" style="width: 20px; height: 20px; filter: brightness(0) invert(1);">
+                </button>
+              </div>
               <div class="answers-list" id="answers-${index}">
                 ${detailedAnswers.map((answer, i) => `
                   <div class="answer-item">
@@ -147,7 +152,7 @@ async function loadResults() {
 // Toggle detailed answers
 function toggleDetails(index) {
   const answersList = document.getElementById(`answers-${index}`);
-  const button = answersList.previousElementSibling;
+  const button = document.getElementById(`toggle-btn-${index}`);
   const answerCount = answersList.children.length;
   
   if (answersList.classList.contains('show')) {
@@ -157,6 +162,71 @@ function toggleDetails(index) {
     answersList.classList.add('show');
     button.textContent = `Hide Answers ▲`;
   }
+}
+
+// Share results
+async function shareResults(index, takerName, results, detailedAnswers) {
+  // Get session ID from the sessions array
+  const response = await fetch('/api/my-sessions');
+  const sessions = await response.json();
+  const completedSessions = sessions.filter(s => s.completed);
+  const session = completedSessions[index];
+  
+  if (!session) {
+    showToast('Session not found', 'error');
+    return;
+  }
+  
+  const shareUrl = `${window.location.origin}/result?id=${session.id}`;
+  
+  // Try to use Web Share API if available
+  if (navigator.share) {
+    try {
+      await navigator.share({
+        title: `PartnerScan Results - ${takerName}`,
+        text: `Check out ${takerName}'s quiz results! 🎯`,
+        url: shareUrl
+      });
+      showToast('Link shared successfully! 🎉', 'success');
+    } catch (error) {
+      if (error.name !== 'AbortError') {
+        copyToClipboard(shareUrl);
+      }
+    }
+  } else {
+    // Fallback to clipboard
+    copyToClipboard(shareUrl);
+  }
+}
+
+// Copy to clipboard
+function copyToClipboard(text) {
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(text).then(() => {
+      showToast('Results copied to clipboard! 📋', 'success');
+    }).catch(() => {
+      fallbackCopy(text);
+    });
+  } else {
+    fallbackCopy(text);
+  }
+}
+
+// Fallback copy method
+function fallbackCopy(text) {
+  const textarea = document.createElement('textarea');
+  textarea.value = text;
+  textarea.style.position = 'fixed';
+  textarea.style.opacity = '0';
+  document.body.appendChild(textarea);
+  textarea.select();
+  try {
+    document.execCommand('copy');
+    showToast('Results copied to clipboard! 📋', 'success');
+  } catch (err) {
+    showToast('Could not copy results. Please try again.', 'error');
+  }
+  document.body.removeChild(textarea);
 }
 
 // Initialize

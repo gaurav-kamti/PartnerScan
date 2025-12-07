@@ -80,6 +80,10 @@ app.get('/terms', (req, res) => {
   res.sendFile(__dirname + '/public/terms.html');
 });
 
+app.get('/result', (req, res) => {
+  res.sendFile(__dirname + '/public/result.html');
+});
+
 // Routes
 app.post('/api/signup', async (req, res) => {
   try {
@@ -241,6 +245,31 @@ app.get('/api/my-sessions', requireAuth, async (req, res) => {
     });
     
     res.json(userSessions);
+  } catch (error) {
+    res.status(500).json({ error: 'Server error' });
+  }
+});
+
+// Get specific result by session ID (public)
+app.get('/api/result/:sessionId', async (req, res) => {
+  try {
+    const { sessionId } = req.params;
+    
+    const session = await QuizSession.findOne({ sessionId });
+    
+    if (!session) {
+      return res.status(404).json({ error: 'Result not found' });
+    }
+    
+    if (!session.completed) {
+      return res.status(404).json({ error: 'Quiz not completed yet' });
+    }
+    
+    res.json({
+      takerName: session.takerName,
+      results: session.results,
+      completedAt: session.completedAt
+    });
   } catch (error) {
     res.status(500).json({ error: 'Server error' });
   }

@@ -80,14 +80,45 @@ document.getElementById('verifyForm').addEventListener('submit', async (e) => {
   }
 });
 
-// Resend OTP
-document.getElementById('resendBtn').addEventListener('click', async () => {
+// Resend OTP with 2-minute cooldown
+const resendBtn = document.getElementById('resendBtn');
+let resendCooldown = false;
+
+function startResendTimer() {
+  resendCooldown = true;
+  resendBtn.disabled = true;
+  let timeLeft = 120; // 2 minutes in seconds
+  
+  const originalText = resendBtn.textContent;
+  
+  const timer = setInterval(() => {
+    const minutes = Math.floor(timeLeft / 60);
+    const seconds = timeLeft % 60;
+    resendBtn.textContent = `Resend Code (${minutes}:${seconds.toString().padStart(2, '0')})`;
+    timeLeft--;
+    
+    if (timeLeft < 0) {
+      clearInterval(timer);
+      resendBtn.textContent = originalText;
+      resendBtn.disabled = false;
+      resendCooldown = false;
+    }
+  }, 1000);
+}
+
+// Start timer on page load
+startResendTimer();
+
+resendBtn.addEventListener('click', async () => {
+  if (resendCooldown) return;
+  
   try {
     const response = await fetch('/api/resend-otp', { method: 'POST' });
     const data = await response.json();
     
     if (response.ok) {
       showToast('New code sent! Check your email 📧', 'success');
+      startResendTimer();
     } else {
       showToast(data.error || 'Failed to resend code', 'error');
     }

@@ -6,10 +6,68 @@ const bodyParser = require('body-parser');
 const bcrypt = require('bcryptjs');
 const { v4: uuidv4 } = require('uuid');
 const mongoose = require('mongoose');
+const nodemailer = require('nodemailer');
 
 // Import models
 const User = require('./models/User');
 const QuizSession = require('./models/QuizSession');
+
+// Email transporter - lazy initialization
+let transporter;
+function getTransporter() {
+  if (!transporter) {
+    transporter = nodemailer.createTransport({
+      service: process.env.EMAIL_SERVICE || 'gmail',
+      auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASSWORD
+      }
+    });
+  }
+  return transporter;
+}
+
+// Generate 6-digit OTP
+function generateOTP() {
+  return Math.floor(100000 + Math.random() * 900000).toString();
+}
+
+// Send OTP email
+async function sendOTPEmail(email, name, otp) {
+  const mailOptions = {
+    from: process.env.EMAIL_USER,
+    to: email,
+    subject: 'Your Verification Code - PartnerScan',
+    html: `
+      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
+        <div style="text-align: center; margin-bottom: 30px;">
+          <h2 style="color: #667eea; margin: 0;">PartnerScan ⚡</h2>
+        </div>
+        <h3 style="color: #333;">Hi ${name}! 👋</h3>
+        <p style="color: #666; font-size: 1rem;">Thank you for signing up! Use this code to verify your email:</p>
+        
+        <div style="background: linear-gradient(135deg, #667eea, #764ba2); padding: 30px; border-radius: 15px; text-align: center; margin: 30px 0;">
+          <div style="color: white; font-size: 0.9rem; margin-bottom: 10px;">YOUR VERIFICATION CODE</div>
+          <div style="background: white; display: inline-block; padding: 20px 40px; border-radius: 10px;">
+            <span style="font-size: 2.5rem; font-weight: bold; color: #667eea; letter-spacing: 8px;">${otp}</span>
+          </div>
+        </div>
+        
+        <div style="background: #fff3cd; border-left: 4px solid #ffc107; padding: 15px; border-radius: 5px;">
+          <p style="margin: 0; color: #856404; font-size: 0.9rem;">⚠️ This code expires in <strong>10 minutes</strong>.</p>
+        </div>
+      </div>
+    `
+  };
+  
+  try {
+    await getTransporter().sendMail(mailOptions);
+    return true;
+  } catch (error) {
+    console.error('Email send error:', error);
+    return false;
+  }
+}
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -110,6 +168,10 @@ app.get('/result', (req, res) => {
   res.sendFile(__dirname + '/public/result.html');
 });
 
+app.get('/verify-otp', (req, res) => {
+  res.sendFile(__dirname + '/public/verify-otp.html');
+});
+
 // Routes
 app.post('/api/signup', async (req, res) => {
   try {
@@ -122,16 +184,110 @@ app.post('/api/signup', async (req, res) => {
     
     const hashedPassword = await bcrypt.hash(password, 10);
     
+    // Generate OTP
+    const otp = generateOTP();
+    const otpExpires = new Date(Date.now() + 10 * 60 * 1000); // 10 minutes
+    
     const user = new User({
       name,
       email,
-      password: hashedPassword
+      password: hashedPassword,
+      verificationOTP: otp,
+      otpExpires: otpExpires
     });
     
     await user.save();
     
+    // Send OTP email
+    const emailSent = await sendOTPEmail(email, name, otp);
+    
+    // If email fails, log OTP for debugging but still require verification
+    if (!emailSent) {
+      console.log('⚠️  Email failed to send. OTP for debugging:', otp);
+      // Still require verification - user can use resend button
+    }
+    
     req.session.userId = user._id.toString();
-    res.json({ success: true, userId: user._id, name: user.name });
+    res.json({ success: true, userId: user._id, name: user.name, email: user.email, needsVerification: true });
+  } catch (error) {
+    res.status(500).json({ error: 'Server error' });
+  }
+});
+
+// Verify OTP
+app.post('/api/verify-otp', requireAuth, async (req, res) => {
+  try {
+    const { otp } = req.body;
+    
+    const user = await User.findById(req.session.userId);
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+    
+    if (user.emailVerified) {
+      return res.status(400).json({ error: 'Email already verified' });
+    }
+    
+    // Check if OTP expired
+    if (new Date() > user.otpExpires) {
+      return res.status(400).json({ error: 'Code expired. Please request a new one.' });
+    }
+    
+    // Check attempts
+    if (user.otpAttempts >= 5) {
+      return res.status(429).json({ error: 'Too many attempts. Please request a new code.' });
+    }
+    
+    // Verify OTP
+    if (user.verificationOTP !== otp) {
+      user.otpAttempts += 1;
+      await user.save();
+      return res.status(400).json({ error: `Invalid code. ${5 - user.otpAttempts} attempts remaining.` });
+    }
+    
+    // Success - verify email
+    user.emailVerified = true;
+    user.verificationOTP = undefined;
+    user.otpExpires = undefined;
+    user.otpAttempts = 0;
+    await user.save();
+    
+    res.json({ success: true, message: 'Email verified successfully' });
+  } catch (error) {
+    res.status(500).json({ error: 'Server error' });
+  }
+});
+
+// Resend OTP
+app.post('/api/resend-otp', requireAuth, async (req, res) => {
+  try {
+    const user = await User.findById(req.session.userId);
+    
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+    
+    if (user.emailVerified) {
+      return res.status(400).json({ error: 'Email already verified' });
+    }
+    
+    // Generate new OTP
+    const otp = generateOTP();
+    const otpExpires = new Date(Date.now() + 10 * 60 * 1000);
+    
+    user.verificationOTP = otp;
+    user.otpExpires = otpExpires;
+    user.otpAttempts = 0;
+    await user.save();
+    
+    // Send email
+    const emailSent = await sendOTPEmail(user.email, user.name, otp);
+    
+    if (!emailSent) {
+      return res.status(500).json({ error: 'Failed to send email' });
+    }
+    
+    res.json({ success: true, message: 'New code sent' });
   } catch (error) {
     res.status(500).json({ error: 'Server error' });
   }
@@ -152,6 +308,18 @@ app.post('/api/login', async (req, res) => {
     }
     
     req.session.userId = user._id.toString();
+    
+    // Check if email verification is needed
+    if (!user.emailVerified) {
+      return res.json({ 
+        success: true, 
+        userId: user._id, 
+        name: user.name, 
+        email: user.email,
+        needsVerification: true 
+      });
+    }
+    
     res.json({ success: true, userId: user._id, name: user.name });
   } catch (error) {
     res.status(500).json({ error: 'Server error' });

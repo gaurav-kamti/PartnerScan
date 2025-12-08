@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Verify Email - PartnerScan</title>
+  <link rel="icon" type="image/png" href="/images/favicon.png" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="auth.css" />
+  <script src="toast.js"></script>
+</head>
+<body>
+  <a href="/landing" id="Logo" style="text-decoration: none; color: inherit; display: flex; align-items: center; justify-content: center; gap: 10px;">
+    <img src="/images/logo.png" alt="PartnerScan" style="width: 40px; height: 40px;">
+    <h1 style="margin: 0;">PartnerScan</h1>
+  </a>
+  <div class="container">
+    <div class="card">
+      <h2>Verify Your Email</h2>
+      <p style="text-align: center; color: #666; margin-bottom: 10px;">We've sent a 6-digit code to</p>
+      <p id="emailDisplay" style="text-align: center; color: #667eea; font-weight: 600; margin-bottom: 20px;"></p>
+      <form id="verifyForm">
+        <div style="display: flex; gap: 10px; justify-content: center; margin: 30px 0;">
+          <input type="text" id="otp1" maxlength="1" style="width: 50px; height: 60px; text-align: center; font-size: 2rem; font-weight: bold; border: 2px solid #667eea; border-radius: 8px;" />
+          <input type="text" id="otp2" maxlength="1" style="width: 50px; height: 60px; text-align: center; font-size: 2rem; font-weight: bold; border: 2px solid #667eea; border-radius: 8px;" />
+          <input type="text" id="otp3" maxlength="1" style="width: 50px; height: 60px; text-align: center; font-size: 2rem; font-weight: bold; border: 2px solid #667eea; border-radius: 8px;" />
+          <input type="text" id="otp4" maxlength="1" style="width: 50px; height: 60px; text-align: center; font-size: 2rem; font-weight: bold; border: 2px solid #667eea; border-radius: 8px;" />
+          <input type="text" id="otp5" maxlength="1" style="width: 50px; height: 60px; text-align: center; font-size: 2rem; font-weight: bold; border: 2px solid #667eea; border-radius: 8px;" />
+          <input type="text" id="otp6" maxlength="1" style="width: 50px; height: 60px; text-align: center; font-size: 2rem; font-weight: bold; border: 2px solid #667eea; border-radius: 8px;" />
+        </div>
+        <button type="submit">Verify Email</button>
+      </form>
+      <p style="text-align: center; margin-top: 20px;">
+        <button id="resendBtn" style="background: none; border: none; color: #667eea; cursor: pointer; text-decoration: underline; font-size: 0.9rem;">Resend Code</button>
+      </p>
+      <div id="error" class="error"></div>
+    </div>
+  </div>
+  <script src="verify-otp.js"></script>
+</body>
+</html>

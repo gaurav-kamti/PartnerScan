@@ -4,10 +4,18 @@ if (signupForm) {
   signupForm.addEventListener('submit', async (e) => {
     e.preventDefault();
     
-    const name = document.getElementById('name').value;
-    const email = document.getElementById('email').value;
+    const name = document.getElementById('name').value.trim();
+    const email = document.getElementById('email').value.trim();
     const password = document.getElementById('password').value;
     const confirmPassword = document.getElementById('confirmPassword').value;
+    
+    // Validate email format
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      showToast('Please enter a valid email address', 'error');
+      document.getElementById('error').textContent = 'Please enter a valid email address';
+      return;
+    }
     
     // Validate password match
     if (password !== confirmPassword) {
@@ -36,8 +44,14 @@ if (signupForm) {
       hideLoading();
       
       if (response.ok) {
-        showToast('Account created successfully! 🎉', 'success');
-        setTimeout(() => window.location.href = '/dashboard', 1000);
+        if (data.needsVerification) {
+          sessionStorage.setItem('verifyEmail', email);
+          showToast('Account created! Please verify your email 📧', 'success');
+          setTimeout(() => window.location.href = '/verify-otp', 1500);
+        } else {
+          showToast('Account created successfully! 🎉', 'success');
+          setTimeout(() => window.location.href = '/dashboard', 1000);
+        }
       } else {
         showToast(data.error || 'Signup failed', 'error');
         document.getElementById('error').textContent = data.error;
@@ -56,8 +70,16 @@ if (loginForm) {
   loginForm.addEventListener('submit', async (e) => {
     e.preventDefault();
     
-    const email = document.getElementById('email').value;
+    const email = document.getElementById('email').value.trim();
     const password = document.getElementById('password').value;
+    
+    // Validate email format
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      showToast('Please enter a valid email address', 'error');
+      document.getElementById('error').textContent = 'Please enter a valid email address';
+      return;
+    }
     
     showLoading('Logging you in...');
     
@@ -72,8 +94,14 @@ if (loginForm) {
       hideLoading();
       
       if (response.ok) {
-        showToast('Login successful! Welcome back 👋', 'success');
-        setTimeout(() => window.location.href = '/dashboard', 1000);
+        if (data.needsVerification) {
+          sessionStorage.setItem('verifyEmail', data.email);
+          showToast('Please verify your email to continue 📧', 'success');
+          setTimeout(() => window.location.href = '/verify-otp', 1500);
+        } else {
+          showToast('Login successful! Welcome back 👋', 'success');
+          setTimeout(() => window.location.href = '/dashboard', 1000);
+        }
       } else {
         showToast(data.error || 'Login failed', 'error');
         document.getElementById('error').textContent = data.error;
@@ -87,3 +115,18 @@ if (loginForm) {
 }
 
 
+
+// Show/Hide Password Toggle
+const showPasswordCheckbox = document.getElementById('showPassword');
+if (showPasswordCheckbox) {
+  showPasswordCheckbox.addEventListener('change', (e) => {
+    const passwordField = document.getElementById('password');
+    const confirmPasswordField = document.getElementById('confirmPassword');
+    
+    const type = e.target.checked ? 'text' : 'password';
+    passwordField.type = type;
+    if (confirmPasswordField) {
+      confirmPasswordField.type = type;
+    }
+  });
+}

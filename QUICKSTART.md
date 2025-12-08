@@ -53,6 +53,8 @@ Server will run at: `http://localhost:3000`
 1. **User1 (Creator)**:
    - Visit `http://localhost:3000/landing`
    - Click "Get Started" and create an account
+   - Check email for 6-digit OTP code
+   - Enter OTP to verify email
    - Select relationship stage (Situationship/Relationship/Fiancée)
    - Click "Start" button
    - Copy the generated link (shortened with ?s=)
@@ -67,14 +69,17 @@ Server will run at: `http://localhost:3000`
    - Check email for notification
    - Or click "Inbox" on dashboard to see detailed results in original order
 
-## 📧 Email Setup (Optional but Recommended)
+## 📧 Email Setup (REQUIRED)
 
 For Gmail:
 1. Enable 2-Factor Authentication
 2. Generate App Password: https://myaccount.google.com/apppasswords
-3. Use app password in `.env` file
+3. Update `.env` file:
+   - `EMAIL_SERVICE=gmail`
+   - `EMAIL_USER=your-email@gmail.com`
+   - `EMAIL_PASSWORD=your-app-password`
 
-Without email setup, results will still be saved to database and visible on dashboard.
+**Important:** Email is required for user signup verification. Users receive a 6-digit OTP code to verify their email address. Quiz results are also sent via email.
 
 ## 🐛 Troubleshooting
 
@@ -83,10 +88,14 @@ Without email setup, results will still be saved to database and visible on dash
 - Verify connection string in `.env`
 - See `MONGODB_SETUP.md` for detailed setup
 
-**Email Not Sending:**
+**Email/OTP Not Sending:**
 - Verify email credentials in `.env`
 - Check if app password is correct (not regular password)
-- Email errors won't stop quiz submission
+- Check `EMAIL_SERVICE` is set to `gmail`
+- Check spam folder for OTP email
+- Check server console for OTP (logged if email fails)
+- Try "Resend Code" button after 2-minute cooldown
+- Note: Users cannot complete signup without email verification
 
 **Port Already in Use:**
 - Change `PORT` in `.env` file
@@ -101,8 +110,10 @@ partnerscan/
 │   └── QuizSession.js       # Quiz session schema with stage
 ├── public/
 │   ├── landing.html         # Landing page
-│   ├── login.html           # Login page
-│   ├── signup.html          # Signup with confirm password
+│   ├── login.html           # Login page with show password
+│   ├── signup.html          # Signup with confirm password & show password
+│   ├── verify-otp.html      # Email verification page
+│   ├── verify-otp.js        # OTP verification logic with 2-min cooldown
 │   ├── dashboard.html       # Dashboard with stage selector
 │   ├── quiz.html            # Quiz page with randomization
 │   ├── inbox.html           # Results inbox

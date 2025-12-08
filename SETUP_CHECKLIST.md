@@ -33,16 +33,17 @@ Choose ONE option:
 
 **Detailed instructions:** See `MONGODB_SETUP.md`
 
-## 📧 Email Setup (Optional but Recommended)
+## 📧 Email Setup (REQUIRED for Email Verification)
 
 For Gmail:
 - [ ] Have a Gmail account
 - [ ] Enable 2-Factor Authentication
 - [ ] Generate App Password: https://myaccount.google.com/apppasswords
+- [ ] Update `EMAIL_SERVICE` in `.env` (set to `gmail`)
 - [ ] Update `EMAIL_USER` in `.env`
 - [ ] Update `EMAIL_PASSWORD` in `.env` (use app password, not regular password)
 
-**Note:** Without email setup, results will still be saved and visible on dashboard.
+**Important:** Email is now required for user signup verification. Users receive a 6-digit OTP code to verify their email address.
 
 ## 🔧 Project Setup
 
@@ -75,6 +76,10 @@ For Gmail:
 - [ ] Visit: http://localhost:3000/landing
 - [ ] Click "Get Started"
 - [ ] Create account with name, email, password, confirm password
+- [ ] Should redirect to verify-otp page
+- [ ] Check email for 6-digit OTP code
+- [ ] Enter OTP code (auto-advances between digits)
+- [ ] Click "Verify Email"
 - [ ] Should redirect to dashboard
 - [ ] Select relationship stage (Situationship/Relationship/Fiancée)
 - [ ] Click "Start" button
@@ -110,11 +115,14 @@ If something doesn't work:
 - [ ] For Atlas: Check network access settings
 - [ ] For Atlas: Verify username/password
 
-**Email Not Sending:**
+**Email/OTP Not Sending:**
 - [ ] Verify email credentials in `.env`
 - [ ] Make sure using app password, not regular password
-- [ ] Check spam folder
-- [ ] Note: Quiz still works without email
+- [ ] Check `EMAIL_SERVICE` is set to `gmail`
+- [ ] Check spam folder for OTP email
+- [ ] Check server console for OTP (logged if email fails)
+- [ ] Try clicking "Resend Code" after 2-minute cooldown
+- [ ] Note: Users cannot complete signup without email verification
 
 **Port Already in Use:**
 - [ ] Change `PORT` in `.env` to different number (e.g., 3001)
@@ -147,6 +155,7 @@ Once everything works:
 |-----|---------|
 | `/landing` | Landing page |
 | `/signup` | Create account |
+| `/verify-otp` | Email verification with OTP |
 | `/login` | Login |
 | `/dashboard` | Dashboard with stage selector |
 | `/inbox` | Results inbox |
@@ -156,11 +165,13 @@ Once everything works:
 
 You're all set when:
 - ✅ Server starts without errors
-- ✅ Can create account and login
+- ✅ Can create account and receive OTP email
+- ✅ Can verify email with OTP code
+- ✅ Can login with verified account
 - ✅ Can generate shareable link
 - ✅ Can take quiz via shared link
 - ✅ Results appear on dashboard
-- ✅ (Optional) Email notifications work
+- ✅ Email notifications work for quiz results
 
 ---
 

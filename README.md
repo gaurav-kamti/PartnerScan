@@ -4,7 +4,10 @@ A collaborative relationship quiz application where User1 selects a relationship
 
 ## Features
 
-- User authentication with password confirmation
+- User authentication with email verification (OTP)
+- Password confirmation and show/hide password toggle
+- Secure email verification with 6-digit OTP codes
+- 2-minute cooldown on resend OTP
 - Relationship stage selector (Situationship, Relationship, Fiancée)
 - Stage-specific question sets (15/15/21 questions)
 - Question randomization with original order tracking
@@ -31,9 +34,10 @@ npm install
 3. **Configure environment variables**:
    - Copy `.env.example` to `.env`
    - Update MongoDB URI (if not using default local)
-   - Add your email credentials for notifications:
+   - **Required:** Add your email credentials for OTP verification:
      - For Gmail: Enable 2FA and create an app-specific password
-     - Update `EMAIL_USER` and `EMAIL_PASSWORD` in `.env`
+     - Update `EMAIL_SERVICE`, `EMAIL_USER` and `EMAIL_PASSWORD` in `.env`
+     - Without email setup, users cannot verify their accounts
 
 4. **Start the server**:
 ```bash
@@ -51,7 +55,9 @@ npm start
                               │
                               ▼
                     1. Visit /landing
-                    2. Create account / Login
+                    2. Create account (with email verification)
+                    3. Verify email with 6-digit OTP code
+                    4. Login (or skip verification if already verified)
                               │
                               ▼
                     3. Redirected to /dashboard
@@ -148,8 +154,10 @@ partnerscan/
 │   └── QuizSession.js       # Quiz session schema
 ├── public/
 │   ├── landing.html         # Landing page
-│   ├── login.html           # Login page
-│   ├── signup.html          # Signup page
+│   ├── login.html           # Login page with show password
+│   ├── signup.html          # Signup page with show password
+│   ├── verify-otp.html      # Email verification page
+│   ├── verify-otp.js        # OTP verification logic
 │   ├── dashboard.html       # Dashboard with stage selector
 │   ├── quiz.html            # Quiz interface
 │   ├── inbox.html           # Results inbox
@@ -180,7 +188,9 @@ partnerscan/
 ## Database Schema
 
 **User Model:**
-- name, email, password (hashed), createdAt
+- name, email, password (hashed)
+- emailVerified, verificationOTP, otpExpires, otpAttempts
+- createdAt
 
 **QuizSession Model:**
 - sessionId (unique), creatorId, creatorEmail, creatorName

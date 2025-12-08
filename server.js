@@ -61,10 +61,18 @@ async function sendOTPEmail(email, name, otp) {
   };
   
   try {
-    await getTransporter().sendMail(mailOptions);
+    // Add 15 second timeout
+    const timeoutPromise = new Promise((_, reject) => 
+      setTimeout(() => reject(new Error('Email timeout after 15s')), 15000)
+    );
+    
+    await Promise.race([
+      getTransporter().sendMail(mailOptions),
+      timeoutPromise
+    ]);
     return true;
   } catch (error) {
-    console.error('Email send error:', error);
+    console.error('Email send error:', error.message);
     return false;
   }
 }
@@ -198,16 +206,20 @@ app.post('/api/signup', async (req, res) => {
     
     await user.save();
     
-    // Send OTP email
-    const emailSent = await sendOTPEmail(email, name, otp);
-    
-    // If email fails, log OTP for debugging but still require verification
-    if (!emailSent) {
-      console.log('⚠️  Email failed to send. OTP for debugging:', otp);
-      // Still require verification - user can use resend button
-    }
-    
     req.session.userId = user._id.toString();
+    
+    // Send OTP email in background (don't wait for it)
+    sendOTPEmail(email, name, otp).then(emailSent => {
+      if (!emailSent) {
+        console.log('⚠️  Email failed to send. OTP for debugging:', otp);
+      } else {
+        console.log('✅ OTP email sent to:', email);
+      }
+    }).catch(err => {
+      console.log('⚠️  Email error. OTP for debugging:', otp);
+    });
+    
+    // Respond immediately without waiting for email
     res.json({ success: true, userId: user._id, name: user.name, email: user.email, needsVerification: true });
   } catch (error) {
     res.status(500).json({ error: 'Server error' });
